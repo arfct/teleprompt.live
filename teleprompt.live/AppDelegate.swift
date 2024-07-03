@@ -21,7 +21,7 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
     return false
   }
   
-  private let apiKey = "Token 6c15d28d34012def93b1282c1c725007ed1f33a2"
+  private let apiKey = "Token $DEEPGRAM_KEY"
   private let audioEngine = AVAudioEngine()
   
   private lazy var socket: WebSocket = {
