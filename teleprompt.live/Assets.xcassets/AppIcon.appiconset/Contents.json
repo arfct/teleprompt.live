@@ -1,0 +1,14 @@
+{
+  "images" : [
+    {
+      "filename" : "davidpsingleton_app_logo_for_a_live_teleprompter_app_2a41ef18-e6f4-40d5-b20c-45854d532c66.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

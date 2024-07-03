@@ -1,0 +1,562 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA4A8B502C349E6000E3DFE0 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8B4F2C349E6000E3DFE0 /* Starscream */; };
+		AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */; };
+		AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */; };
+		AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */; };
+		AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */; };
+		AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */; };
+		AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C55A2C3362D800D47368 /* TelepromptView.swift */; };
+		AAB3C55D2C3362D800D47368 /* CachedDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C55C2C3362D800D47368 /* CachedDocument.swift */; };
+		AAB3C55F2C3362D900D47368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAB3C55E2C3362D900D47368 /* Assets.xcassets */; };
+		AAB3C5622C3362D900D47368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */; };
+		AAB3C56A2C3363EE00D47368 /* GoogleAPIClientForRESTCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5692C3363EE00D47368 /* GoogleAPIClientForRESTCore */; };
+		AAB3C56D2C33641100D47368 /* GTMSessionFetcher in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C56C2C33641100D47368 /* GTMSessionFetcher */; };
+		AAB3C56F2C33641100D47368 /* GTMSessionFetcherCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C56E2C33641100D47368 /* GTMSessionFetcherCore */; };
+		AAB3C5712C33641100D47368 /* GTMSessionFetcherFull in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5702C33641100D47368 /* GTMSessionFetcherFull */; };
+		AAB3C5732C33641100D47368 /* GTMSessionFetcherLogView in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5722C33641100D47368 /* GTMSessionFetcherLogView */; };
+		AAB3C5762C33648900D47368 /* GTMAppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5752C33648900D47368 /* GTMAppAuth */; };
+		AAB3C5792C3364A200D47368 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5782C3364A200D47368 /* AppAuth */; };
+		AAB3C57B2C3364A200D47368 /* AppAuthCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C57A2C3364A200D47368 /* AppAuthCore */; };
+		AAB3C57D2C3364A200D47368 /* AppAuthTV in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C57C2C3364A200D47368 /* AppAuthTV */; };
+		AAB3C57F2C33651000D47368 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C57E2C33651000D47368 /* AppDelegate.swift */; };
+		AAB3C5812C33658800D47368 /* GoogleAPIClientForREST_ACMEDNS in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5802C33658800D47368 /* GoogleAPIClientForREST_ACMEDNS */; };
+		AAB3C5832C33658800D47368 /* GoogleAPIClientForREST_AIPlatformNotebooks in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5822C33658800D47368 /* GoogleAPIClientForREST_AIPlatformNotebooks */; };
+		AAB3C5852C33658800D47368 /* GoogleAPIClientForREST_APIGateway in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5842C33658800D47368 /* GoogleAPIClientForREST_APIGateway */; };
+		AAB3C5872C33658800D47368 /* GoogleAPIClientForREST_APIManagement in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5862C33658800D47368 /* GoogleAPIClientForREST_APIManagement */; };
+		AAB3C5892C3366AC00D47368 /* GoogleAPIClientForREST_Docs in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5882C3366AC00D47368 /* GoogleAPIClientForREST_Docs */; };
+		AAB3C58B2C33670C00D47368 /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C58A2C33670C00D47368 /* GoogleAPIClientForREST_Drive */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMatcher.swift; sourceTree = "<group>"; };
+		AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceMatcher.swift; sourceTree = "<group>"; };
+		AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPickerView.swift; sourceTree = "<group>"; };
+		AAB3C5552C3362D800D47368 /* teleprompt.live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teleprompt.live.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teleprompt_liveApp.swift; sourceTree = "<group>"; };
+		AAB3C55A2C3362D800D47368 /* TelepromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelepromptView.swift; sourceTree = "<group>"; };
+		AAB3C55C2C3362D800D47368 /* CachedDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedDocument.swift; sourceTree = "<group>"; };
+		AAB3C55E2C3362D900D47368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AAB3C5522C3362D800D47368 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAB3C5832C33658800D47368 /* GoogleAPIClientForREST_AIPlatformNotebooks in Frameworks */,
+				AAB3C5852C33658800D47368 /* GoogleAPIClientForREST_APIGateway in Frameworks */,
+				AAB3C5892C3366AC00D47368 /* GoogleAPIClientForREST_Docs in Frameworks */,
+				AAB3C57D2C3364A200D47368 /* AppAuthTV in Frameworks */,
+				AAB3C56F2C33641100D47368 /* GTMSessionFetcherCore in Frameworks */,
+				AAB3C5712C33641100D47368 /* GTMSessionFetcherFull in Frameworks */,
+				AAB3C5732C33641100D47368 /* GTMSessionFetcherLogView in Frameworks */,
+				AAB3C56D2C33641100D47368 /* GTMSessionFetcher in Frameworks */,
+				AAB3C56A2C3363EE00D47368 /* GoogleAPIClientForRESTCore in Frameworks */,
+				AAB3C58B2C33670C00D47368 /* GoogleAPIClientForREST_Drive in Frameworks */,
+				AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */,
+				AAB3C5872C33658800D47368 /* GoogleAPIClientForREST_APIManagement in Frameworks */,
+				AAB3C5792C3364A200D47368 /* AppAuth in Frameworks */,
+				AAB3C5762C33648900D47368 /* GTMAppAuth in Frameworks */,
+				AAB3C57B2C3364A200D47368 /* AppAuthCore in Frameworks */,
+				AAB3C5812C33658800D47368 /* GoogleAPIClientForREST_ACMEDNS in Frameworks */,
+				AA4A8B502C349E6000E3DFE0 /* Starscream in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AAB3C54C2C3362D800D47368 = {
+			isa = PBXGroup;
+			children = (
+				AAB3C5572C3362D800D47368 /* teleprompt.live */,
+				AAB3C5562C3362D800D47368 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AAB3C5562C3362D800D47368 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAB3C5552C3362D800D47368 /* teleprompt.live.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAB3C5572C3362D800D47368 /* teleprompt.live */ = {
+			isa = PBXGroup;
+			children = (
+				AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */,
+				AAB3C55A2C3362D800D47368 /* TelepromptView.swift */,
+				AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */,
+				AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */,
+				AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */,
+				AAB3C55C2C3362D800D47368 /* CachedDocument.swift */,
+				AAB3C55E2C3362D900D47368 /* Assets.xcassets */,
+				AAB3C5602C3362D900D47368 /* Preview Content */,
+				AAB3C57E2C33651000D47368 /* AppDelegate.swift */,
+			);
+			path = teleprompt.live;
+			sourceTree = "<group>";
+		};
+		AAB3C5602C3362D900D47368 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AAB3C5542C3362D800D47368 /* teleprompt.live */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAB3C5652C3362D900D47368 /* Build configuration list for PBXNativeTarget "teleprompt.live" */;
+			buildPhases = (
+				AAB3C5512C3362D800D47368 /* Sources */,
+				AAB3C5522C3362D800D47368 /* Frameworks */,
+				AAB3C5532C3362D800D47368 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = teleprompt.live;
+			packageProductDependencies = (
+				AAB3C5692C3363EE00D47368 /* GoogleAPIClientForRESTCore */,
+				AAB3C56C2C33641100D47368 /* GTMSessionFetcher */,
+				AAB3C56E2C33641100D47368 /* GTMSessionFetcherCore */,
+				AAB3C5702C33641100D47368 /* GTMSessionFetcherFull */,
+				AAB3C5722C33641100D47368 /* GTMSessionFetcherLogView */,
+				AAB3C5752C33648900D47368 /* GTMAppAuth */,
+				AAB3C5782C3364A200D47368 /* AppAuth */,
+				AAB3C57A2C3364A200D47368 /* AppAuthCore */,
+				AAB3C57C2C3364A200D47368 /* AppAuthTV */,
+				AAB3C5802C33658800D47368 /* GoogleAPIClientForREST_ACMEDNS */,
+				AAB3C5822C33658800D47368 /* GoogleAPIClientForREST_AIPlatformNotebooks */,
+				AAB3C5842C33658800D47368 /* GoogleAPIClientForREST_APIGateway */,
+				AAB3C5862C33658800D47368 /* GoogleAPIClientForREST_APIManagement */,
+				AAB3C5882C3366AC00D47368 /* GoogleAPIClientForREST_Docs */,
+				AAB3C58A2C33670C00D47368 /* GoogleAPIClientForREST_Drive */,
+				AA4A8B4F2C349E6000E3DFE0 /* Starscream */,
+				AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */,
+			);
+			productName = teleprompt.live;
+			productReference = AAB3C5552C3362D800D47368 /* teleprompt.live.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AAB3C54D2C3362D800D47368 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					AAB3C5542C3362D800D47368 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = AAB3C5502C3362D800D47368 /* Build configuration list for PBXProject "teleprompt.live" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AAB3C54C2C3362D800D47368;
+			packageReferences = (
+				AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
+				AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */,
+				AAB3C5742C33648900D47368 /* XCRemoteSwiftPackageReference "GTMAppAuth" */,
+				AAB3C5772C3364A200D47368 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
+				AA4A8B4E2C349E6000E3DFE0 /* XCRemoteSwiftPackageReference "starscream" */,
+			);
+			productRefGroup = AAB3C5562C3362D800D47368 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AAB3C5542C3362D800D47368 /* teleprompt.live */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AAB3C5532C3362D800D47368 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAB3C5622C3362D900D47368 /* Preview Assets.xcassets in Resources */,
+				AAB3C55F2C3362D900D47368 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AAB3C5512C3362D800D47368 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */,
+				AAB3C57F2C33651000D47368 /* AppDelegate.swift in Sources */,
+				AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */,
+				AAB3C55D2C3362D800D47368 /* CachedDocument.swift in Sources */,
+				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
+				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
+				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AAB3C5632C3362D900D47368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AAB3C5642C3362D900D47368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AAB3C5662C3362D900D47368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
+				DEVELOPMENT_TEAM = A7X888RRVJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "live.teleprompt.teleprompt-live";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AAB3C5672C3362D900D47368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
+				DEVELOPMENT_TEAM = A7X888RRVJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "live.teleprompt.teleprompt-live";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AAB3C5502C3362D800D47368 /* Build configuration list for PBXProject "teleprompt.live" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAB3C5632C3362D900D47368 /* Debug */,
+				AAB3C5642C3362D900D47368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAB3C5652C3362D900D47368 /* Build configuration list for PBXNativeTarget "teleprompt.live" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAB3C5662C3362D900D47368 /* Debug */,
+				AAB3C5672C3362D900D47368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA4A8B4E2C349E6000E3DFE0 /* XCRemoteSwiftPackageReference "starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/google-api-objectivec-client-for-rest";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/gtm-session-fetcher";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		AAB3C5742C33648900D47368 /* XCRemoteSwiftPackageReference "GTMAppAuth" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GTMAppAuth";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.1;
+			};
+		};
+		AAB3C5772C3364A200D47368 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openid/AppAuth-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA4A8B4F2C349E6000E3DFE0 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA4A8B4E2C349E6000E3DFE0 /* XCRemoteSwiftPackageReference "starscream" */;
+			productName = Starscream;
+		};
+		AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_PeopleService;
+		};
+		AAB3C5692C3363EE00D47368 /* GoogleAPIClientForRESTCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForRESTCore;
+		};
+		AAB3C56C2C33641100D47368 /* GTMSessionFetcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */;
+			productName = GTMSessionFetcher;
+		};
+		AAB3C56E2C33641100D47368 /* GTMSessionFetcherCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */;
+			productName = GTMSessionFetcherCore;
+		};
+		AAB3C5702C33641100D47368 /* GTMSessionFetcherFull */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */;
+			productName = GTMSessionFetcherFull;
+		};
+		AAB3C5722C33641100D47368 /* GTMSessionFetcherLogView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C56B2C33641100D47368 /* XCRemoteSwiftPackageReference "gtm-session-fetcher" */;
+			productName = GTMSessionFetcherLogView;
+		};
+		AAB3C5752C33648900D47368 /* GTMAppAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5742C33648900D47368 /* XCRemoteSwiftPackageReference "GTMAppAuth" */;
+			productName = GTMAppAuth;
+		};
+		AAB3C5782C3364A200D47368 /* AppAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5772C3364A200D47368 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuth;
+		};
+		AAB3C57A2C3364A200D47368 /* AppAuthCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5772C3364A200D47368 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuthCore;
+		};
+		AAB3C57C2C3364A200D47368 /* AppAuthTV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5772C3364A200D47368 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuthTV;
+		};
+		AAB3C5802C33658800D47368 /* GoogleAPIClientForREST_ACMEDNS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_ACMEDNS;
+		};
+		AAB3C5822C33658800D47368 /* GoogleAPIClientForREST_AIPlatformNotebooks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_AIPlatformNotebooks;
+		};
+		AAB3C5842C33658800D47368 /* GoogleAPIClientForREST_APIGateway */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_APIGateway;
+		};
+		AAB3C5862C33658800D47368 /* GoogleAPIClientForREST_APIManagement */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_APIManagement;
+		};
+		AAB3C5882C3366AC00D47368 /* GoogleAPIClientForREST_Docs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_Docs;
+		};
+		AAB3C58A2C33670C00D47368 /* GoogleAPIClientForREST_Drive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB3C5682C3363EE00D47368 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_Drive;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AAB3C54D2C3362D800D47368 /* Project object */;
+}
