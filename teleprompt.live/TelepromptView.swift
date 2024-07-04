@@ -27,6 +27,7 @@ struct TelepromptView: View {
   @State private var scrollViewHeight: CGFloat = 0.0
   @State private var isScrolling: Bool = false
   @State private var scrollAnchor: Int? = nil
+  @State private var isListening: Bool = false
   
   private var matcher = StringMatcher()
   
@@ -44,10 +45,6 @@ struct TelepromptView: View {
   
   var body: some View {
     VStack {
-      Button(action: loadDoc) {
-        // TODO make this a refresh icon
-        Text(docTitle ?? "Loading...")
-      }
       ScrollViewReader { proxy in
         ScrollView {
           VStack {
@@ -71,7 +68,14 @@ struct TelepromptView: View {
         }
         .background(Color.black)
         .frame(maxWidth:.infinity, maxHeight:.infinity, alignment:.topLeading)
-      }.id("scrollViewReader")
+      }
+      .id("scrollViewReader")
+      .toolbar {
+        Button(action: loadDoc) {
+          // TODO make this a refresh icon
+          Text(docTitle ?? "Loading...")
+        }
+      }
     }
     .onAppear(perform: loadDoc)
     .onChange(of: appDelegate.lastTranscript) {
@@ -79,8 +83,9 @@ struct TelepromptView: View {
         self.handleLastTranscript(transcript: appDelegate.lastTranscript!)
       }
     }
-    .task {
-      appDelegate.startAnalyzingAudio()
+    .onDisappear {
+      appDelegate.stopAnalyzingAudio()
+      isListening = false
     }
   }
   
@@ -100,7 +105,6 @@ struct TelepromptView: View {
     self.timer = Timer.scheduledTimer(withTimeInterval: scrollSpeed, repeats: true) { _ in
       withAnimation() {
         self.scrollOffset += scrollStep
-        //proxy.scrollTo("documentContent", anchor: .top)
         if (self.scrollAnchor == nil) {
           proxy.scrollTo("documentContent", anchor: UnitPoint(x:0, y: self.scrollOffset))
         } else {
@@ -158,7 +162,11 @@ struct TelepromptView: View {
       DispatchQueue.main.async {
         self.documentContent = content
         self.documentPieces = splitStringIntoSentences(text: content)
-        print(self.documentPieces)
+        
+        if (!self.isListening) {
+          appDelegate.startAnalyzingAudio()
+          self.isListening = true
+        }
       }
     }
   }

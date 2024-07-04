@@ -93,6 +93,20 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
     }
   }
   
+  func stopAnalyzingAudio() {
+      // Disconnect the WebSocket
+      socket.disconnect()
+      
+      // Stop the audio engine
+      audioEngine.stop()
+      
+      // Remove the audio tap
+      audioEngine.inputNode.removeTap(onBus: 0)
+      
+      // Reset the audio session category if needed
+      try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+  }
+  
   private func toNSData(buffer: AVAudioPCMBuffer) -> Data? {
     let audioBuffer = buffer.audioBufferList.pointee.mBuffers
     return Data(bytes: audioBuffer.mData!, count: Int(audioBuffer.mDataByteSize))
