@@ -12,6 +12,7 @@
 		AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */; };
 		AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */; };
 		AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */; };
+		AA4A8BA72C37513200E3DFE0 /* ScriptScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */; };
 		AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */; };
 		AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C55A2C3362D800D47368 /* TelepromptView.swift */; };
 		AAB3C55D2C3362D800D47368 /* CachedDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3C55C2C3362D800D47368 /* CachedDocument.swift */; };
@@ -39,6 +40,7 @@
 		AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMatcher.swift; sourceTree = "<group>"; };
 		AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceMatcher.swift; sourceTree = "<group>"; };
 		AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPickerView.swift; sourceTree = "<group>"; };
+		AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptScrollView.swift; sourceTree = "<group>"; };
 		AAB3C5552C3362D800D47368 /* teleprompt.live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teleprompt.live.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teleprompt_liveApp.swift; sourceTree = "<group>"; };
 		AAB3C55A2C3362D800D47368 /* TelepromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelepromptView.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				AAB3C5582C3362D800D47368 /* teleprompt_liveApp.swift */,
 				AAB3C55A2C3362D800D47368 /* TelepromptView.swift */,
+				AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */,
 				AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */,
 				AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */,
 				AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4A8BA72C37513200E3DFE0 /* ScriptScrollView.swift in Sources */,
 				AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */,
 				AAB3C57F2C33651000D47368 /* AppDelegate.swift in Sources */,
 				AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */,
