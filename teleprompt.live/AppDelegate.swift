@@ -26,11 +26,11 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
   private let apiKey = "Token " + (Bundle.main.object(forInfoDictionaryKey: "DeepgramAPIKey") as? String ?? "")
   private let audioEngine = AVAudioEngine()
   
-  private lazy var socket: WebSocket = {
+  private lazy var socket: Starscream.WebSocket = {
     let url = URL(string: "wss://api.deepgram.com/v1/listen?encoding=linear16&sample_rate=48000&channels=1&model=nova&smart_format=true&filler_words=true&interim_results=true")!
     var urlRequest = URLRequest(url: url)
     urlRequest.setValue(apiKey, forHTTPHeaderField: "Authorization")
-    return WebSocket(request: urlRequest)
+    return Starscream.WebSocket(request: urlRequest)
   }()
   
   private let jsonDecoder: JSONDecoder = {

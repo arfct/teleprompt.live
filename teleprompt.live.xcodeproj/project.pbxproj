@@ -48,7 +48,7 @@
 		AAB3C55E2C3362D900D47368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Secrets.xcconfig"; sourceTree = "<group>"; };
 				/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
