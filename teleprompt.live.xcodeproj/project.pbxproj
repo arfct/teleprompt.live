@@ -49,6 +49,7 @@
 		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Secrets.xcconfig"; sourceTree = "<group>"; };
+		AA00INFO2D000000A00000PL /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 				/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,9 +361,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_DeepgramAPIKey = "$(DEEPGRAM_API_KEY)";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = teleprompt.live/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -392,9 +392,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_DeepgramAPIKey = "$(DEEPGRAM_API_KEY)";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = teleprompt.live/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
