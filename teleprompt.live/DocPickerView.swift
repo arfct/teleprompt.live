@@ -156,17 +156,30 @@ struct DocPickerView: View {
                 if (userEmail == nil) {
                   startOAuthFlow()
                 } else {
-                  // TODO sign out
+                  signOut()
                 }
               }) {
                 Text(userEmail == nil ? "Sign in" : "Sign out")
               }
+              Divider()
+              Text("Transcription")
+                .font(.caption)
+                .foregroundColor(.secondary)
+              Picker("Transcription engine", selection: Binding(
+                get: { appDelegate.selectedEngineKind },
+                set: { appDelegate.selectedEngineKind = $0 }
+              )) {
+                ForEach(TranscriptionEngineKind.allCases) { kind in
+                  Text(kind.displayName).tag(kind)
+                }
+              }
+              .pickerStyle(.inline)
             }
             .padding()
             .background(Color(UIColor.secondarySystemBackground))
             .cornerRadius(8)
             .shadow(radius: 10)
-            .frame(width: 300)
+            .frame(width: 320)
             .transition(.opacity)
           }
         }
@@ -289,41 +302,6 @@ struct DocPickerView: View {
     }
   }
   
-  private func fetchDocumentContent(documentId: String) {
-    print("fetchDocumentContent \(documentId)")
-    let query = GTLRDocsQuery_DocumentsGet.query(withDocumentId: documentId)
-    
-    docsService.executeQuery(query) { (ticket, document, error) in
-      if let error = error {
-        print("Error fetching document: \(error)")
-        return
-      }
-      
-      guard let document = document as? GTLRDocs_Document else {
-        print("No document found")
-        return
-      }
-      
-      let docTitle = document.title
-      
-      var content = ""
-      if let elements = document.body?.content {
-        for element in elements {
-          if let paragraph = element.paragraph, let elements = paragraph.elements {
-            for element in elements {
-              if let textRun = element.textRun, let text = textRun.content {
-                content += text
-              }
-            }
-          }
-        }
-      }
-      let documentContent = content
-      
-      //CachedDocument(createdTimestamp: Date(), googleDocId: googleDocId, title: title)
-    }
-  }
-  
   private func saveAuthState() {
     guard let authState = self.authState else { return }
     
@@ -333,6 +311,16 @@ struct DocPickerView: View {
     } catch {
       print("Failed to save auth state: \(error)")
     }
+  }
+  
+  private func signOut() {
+    authState = nil
+    userEmail = nil
+    docsService.authorizer = nil
+    driveService.authorizer = nil
+    peopleService.authorizer = nil
+    UserDefaults.standard.removeObject(forKey: "authState")
+    UserDefaults.standard.removeObject(forKey: "email")
   }
   
   func loadAuthState() {

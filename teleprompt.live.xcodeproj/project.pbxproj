@@ -34,6 +34,9 @@
 		AAB3C5872C33658800D47368 /* GoogleAPIClientForREST_APIManagement in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5862C33658800D47368 /* GoogleAPIClientForREST_APIManagement */; };
 		AAB3C5892C3366AC00D47368 /* GoogleAPIClientForREST_Docs in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5882C3366AC00D47368 /* GoogleAPIClientForREST_Docs */; };
 		AAB3C58B2C33670C00D47368 /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C58A2C33670C00D47368 /* GoogleAPIClientForREST_Drive */; };
+		AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00TE02D000000A00000TE /* TranscriptionEngine.swift */; };
+		AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */; };
+		AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +53,10 @@
 						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Secrets.xcconfig"; sourceTree = "<group>"; };
 		AA00INFO2D000000A00000PL /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-				/* End PBXFileReference section */
+		AA00TE02D000000A00000TE /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceTranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramTranscriptionEngine.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AAB3C5522C3362D800D47368 /* Frameworks */ = {
@@ -109,6 +115,10 @@
 				AAB3C55E2C3362D900D47368 /* Assets.xcassets */,
 				AAB3C5602C3362D900D47368 /* Preview Content */,
 				AAB3C57E2C33651000D47368 /* AppDelegate.swift */,
+				AA00INFO2D000000A00000PL /* Info.plist */,
+				AA00TE02D000000A00000TE /* TranscriptionEngine.swift */,
+				AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */,
+				AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */,
 			);
 			path = teleprompt.live;
 			sourceTree = "<group>";
@@ -222,6 +232,9 @@
 				AAB3C57F2C33651000D47368 /* AppDelegate.swift in Sources */,
 				AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */,
 				AAB3C55D2C3362D800D47368 /* CachedDocument.swift in Sources */,
+				AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */,
+				AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */,
+				AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */,
 				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
 				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
 				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,

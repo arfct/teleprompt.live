@@ -44,7 +44,15 @@ struct TelepromptView: View {
   }
   
   var body: some View {
-    VStack {
+    VStack(spacing: 0) {
+      if let transcriptionError = appDelegate.transcriptionError {
+        Text(transcriptionError)
+          .font(.footnote)
+          .foregroundColor(.white)
+          .padding(8)
+          .frame(maxWidth: .infinity)
+          .background(Color.red.opacity(0.85))
+      }
       ScrollViewReader { proxy in
         ScrollView {
           VStack {
