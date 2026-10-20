@@ -21,7 +21,9 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
     return false
   }
   
-  private let apiKey = "Token 589eebf8f97620ef9a6d772797b209138fb93511"
+  // Injected at build time via Config/Secrets.xcconfig (gitignored) -> INFOPLIST_KEY_DeepgramAPIKey.
+  // Never hardcode this key in source: it is a public repo.
+  private let apiKey = "Token " + (Bundle.main.object(forInfoDictionaryKey: "DeepgramAPIKey") as? String ?? "")
   private let audioEngine = AVAudioEngine()
   
   private lazy var socket: WebSocket = {

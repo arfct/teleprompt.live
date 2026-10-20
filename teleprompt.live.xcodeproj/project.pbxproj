@@ -47,8 +47,9 @@
 		AAB3C55C2C3362D800D47368 /* CachedDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedDocument.swift; sourceTree = "<group>"; };
 		AAB3C55E2C3362D900D47368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+				/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AAB3C5522C3362D800D47368 /* Frameworks */ = {
@@ -350,6 +351,7 @@
 		};
 		AAB3C5662C3362D900D47368 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA00SEC12D000000A00000SE /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -359,6 +361,7 @@
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_DeepgramAPIKey = "$(DEEPGRAM_API_KEY)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -380,6 +383,7 @@
 		};
 		AAB3C5672C3362D900D47368 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA00SEC12D000000A00000SE /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -389,6 +393,7 @@
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_DeepgramAPIKey = "$(DEEPGRAM_API_KEY)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
