@@ -31,9 +31,15 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
   func startAnalyzingAudio() {
     transcriptionError = nil
 
-    let engine: TranscriptionEngine = selectedEngineKind == .onDevice
-      ? OnDeviceTranscriptionEngine()
-      : DeepgramTranscriptionEngine()
+    let engine: TranscriptionEngine
+    switch selectedEngineKind {
+    case .onDevice:
+      engine = SpeechAnalyzerTranscriptionEngine.isSupported
+        ? SpeechAnalyzerTranscriptionEngine()
+        : OnDeviceTranscriptionEngine()
+    case .deepgram:
+      engine = DeepgramTranscriptionEngine()
+    }
 
     engine.onTranscript = { [weak self] transcript in
       DispatchQueue.main.async {

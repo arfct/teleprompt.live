@@ -6,50 +6,52 @@ struct Match {
     let size: Int
 }
 
-class SequenceMatcher {
-    private var a: [String] = []
-    private var b: [String] = []
+/// Port of Python difflib.SequenceMatcher (without autojunk) over characters.
+/// Characters are interned to Ints and the b-index is built once, so scoring
+/// a transcript against every sentence stays cheap enough to run on each
+/// live (volatile) transcription update.
+final class SequenceMatcher {
+    private let a: [Int]
+    private let b: [Int]
+    private let b2j: [Int: [Int]]
     private var matchingBlocks: [Match]?
-    
+
     init(a: String, b: String) {
-        self.setSeqs(a: Array(a.map { String($0) }), b: Array(b.map { String($0) }))
-    }
-    
-    func setSeqs(a: [String], b: [String]) {
-        self.a = a
-        self.b = b
-        self.matchingBlocks = nil
-    }
-    
-    private func chainB() -> [String: [Int]] {
-        var b2j: [String: [Int]] = [:]
-        for (i, elt) in b.enumerated() {
-            if b2j[elt] != nil {
-                b2j[elt]!.append(i)
-            } else {
-                b2j[elt] = [i]
+        var codes: [Character: Int] = [:]
+        func intern(_ s: String) -> [Int] {
+            s.map { ch in
+                if let c = codes[ch] { return c }
+                let c = codes.count
+                codes[ch] = c
+                return c
             }
         }
-        return b2j
+        self.a = intern(a)
+        self.b = intern(b)
+        var b2j: [Int: [Int]] = [:]
+        for (j, elt) in self.b.enumerated() {
+            b2j[elt, default: []].append(j)
+        }
+        self.b2j = b2j
     }
-    
+
     func findLongestMatch(alo: Int, ahi: Int, blo: Int, bhi: Int) -> Match {
-        let b2j = chainB()
         var besti = alo
         var bestj = blo
         var bestsize = 0
-        
-        var j2len: [Int: Int] = [:]
-        
+        // j2len[j + 1] = length of the match ending at a[i-1], b[j]; index 0
+        // is the "j - 1 == -1" sentinel. Two rows, cleared via touched lists.
+        var j2len = [Int](repeating: 0, count: b.count + 1)
+        var newj2len = [Int](repeating: 0, count: b.count + 1)
+        var touched: [Int] = []
+        var newTouched: [Int] = []
+
         for i in alo..<ahi {
-            var newj2len: [Int: Int] = [:]
             if let bIndices = b2j[a[i]] {
-                for j in bIndices {
-                    if j < blo || j >= bhi {
-                        continue
-                    }
-                    let k = (j2len[j-1] ?? 0) + 1
-                    newj2len[j] = k
+                for j in bIndices where j >= blo && j < bhi {
+                    let k = j2len[j] + 1
+                    newj2len[j + 1] = k
+                    newTouched.append(j + 1)
                     if k > bestsize {
                         besti = i - k + 1
                         bestj = j - k + 1
@@ -57,23 +59,25 @@ class SequenceMatcher {
                     }
                 }
             }
-            j2len = newj2len
+            for t in touched { j2len[t] = 0 }
+            swap(&j2len, &newj2len)
+            swap(&touched, &newTouched)
+            newTouched.removeAll(keepingCapacity: true)
         }
-        
+
         return Match(a: besti, b: bestj, size: bestsize)
     }
-    
+
     func getMatchingBlocks() -> [Match] {
         if let blocks = self.matchingBlocks {
             return blocks
         }
-        
-        var i = 0, j = 0
+
         let la = a.count
         let lb = b.count
         var queue: [(Int, Int, Int, Int)] = [(0, la, 0, lb)]
         var matchingBlocks: [Match] = []
-        
+
         while !queue.isEmpty {
             let (alo, ahi, blo, bhi) = queue.removeLast()
             let match = findLongestMatch(alo: alo, ahi: ahi, blo: blo, bhi: bhi)
@@ -87,14 +91,16 @@ class SequenceMatcher {
                 }
             }
         }
-        
+
         matchingBlocks.append(Match(a: la, b: lb, size: 0))
         self.matchingBlocks = matchingBlocks
         return matchingBlocks
     }
-    
+
     func ratio() -> Double {
+        let total = a.count + b.count
+        guard total > 0 else { return 1.0 }
         let matches = getMatchingBlocks().map { $0.size }.reduce(0, +)
-        return 2.0 * Double(matches) / Double(a.count + b.count)
+        return 2.0 * Double(matches) / Double(total)
     }
 }

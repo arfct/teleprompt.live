@@ -5,21 +5,35 @@ import SwiftData
 /// Seeded once (tracked in UserDefaults), so deleting one keeps it gone.
 enum StarterScripts {
   private static let seededKey = "didSeedStarterScripts.v1"
+  static let adviceToYouthTitle = "Advice to Youth — Mark Twain"
 
   static func seedIfNeeded(into container: ModelContainer) {
     let defaults = UserDefaults.standard
-    guard !defaults.bool(forKey: seededKey) else { return }
     let context = ModelContext(container)
+    guard !defaults.bool(forKey: seededKey) else {
+      renameLegacyTitles(in: context)
+      return
+    }
     insertAll(into: context)
     try? context.save()
     defaults.set(true, forKey: seededKey)
+  }
+
+  /// Early builds seeded the Twain script as just "Advice to Youth".
+  private static func renameLegacyTitles(in context: ModelContext) {
+    let descriptor = FetchDescriptor<CachedDocument>(predicate: #Predicate { $0.title == "Advice to Youth" })
+    guard let matches = try? context.fetch(descriptor), !matches.isEmpty else { return }
+    for doc in matches where doc.body == adviceToYouth {
+      doc.title = adviceToYouthTitle
+    }
+    try? context.save()
   }
 
   static func insertAll(into context: ModelContext) {
     context.insert(CachedDocument(createdTimestamp: Date(),
                                   googleDocId: "",
                                   lastFetchedTimestamp: Date(),
-                                  title: "Advice to Youth",
+                                  title: adviceToYouthTitle,
                                   body: adviceToYouth))
   }
 

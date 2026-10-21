@@ -42,15 +42,26 @@ class StringMatcher {
     return SequenceMatcher(a: a, b: b).ratio()
   }
   
+  /// Scores each sentence against both the whole transcript and its last N
+  /// words (N = the sentence's word count), keeping the better. Live engines
+  /// report a growing in-progress phrase that can span several sentences;
+  /// comparing the full phrase against one sentence would dilute the ratio
+  /// and lag behind the speaker.
   func findBestMatch(transcription: String, sentences: [String]) -> (bestMatch: String?, bestIndex: Int, maxSimilarity: Double) {
       let preprocessedTranscription = preprocessText(transcription)
+      let transcriptWords = preprocessedTranscription.split(separator: " ")
       var maxSimilarity = 0.0
       var bestMatch: String?
       var bestIndex = -1
 
       for (i, sentence) in sentences.enumerated() {
           let preprocessedSentence = preprocessText(sentence)
-          let simScore = similarity(preprocessedTranscription, preprocessedSentence)
+          let sentenceWordCount = preprocessedSentence.split(separator: " ").count
+          var simScore = similarity(preprocessedTranscription, preprocessedSentence)
+          if transcriptWords.count > sentenceWordCount, sentenceWordCount > 0 {
+              let tail = transcriptWords.suffix(sentenceWordCount).joined(separator: " ")
+              simScore = max(simScore, similarity(tail, preprocessedSentence))
+          }
           if simScore > maxSimilarity {
               maxSimilarity = simScore
               bestMatch = sentence

@@ -234,7 +234,7 @@ private struct ScriptCard: View {
       VStack(alignment: .leading, spacing: 1) {
         Text(script.title ?? "Untitled")
           .font(.subheadline.weight(.semibold))
-          .lineLimit(1)
+          .lineLimit(2)
         Text(subtitle)
           .font(.caption)
           .foregroundStyle(.secondary)

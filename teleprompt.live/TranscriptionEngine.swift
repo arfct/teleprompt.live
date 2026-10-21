@@ -4,7 +4,8 @@ import Foundation
 /// cloud (Deepgram) engines conform to this so the rest of the app doesn't
 /// care which one is active.
 protocol TranscriptionEngine: AnyObject {
-  /// Called on an arbitrary queue with each finalized transcript chunk.
+  /// Called on an arbitrary queue with transcript text: finalized chunks,
+  /// and (for engines that support it) in-progress text that may be revised.
   var onTranscript: ((String) -> Void)? { get set }
   /// Called on an arbitrary queue with a user-facing error description
   /// (permission denied, missing config, engine failure, etc).
