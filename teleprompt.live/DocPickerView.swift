@@ -1,391 +1,219 @@
 import SwiftUI
 import SwiftData
-import AppAuth
-import GTMSessionFetcherFull
-import GoogleAPIClientForRESTCore
-import GoogleAPIClientForREST_Docs
-import GoogleAPIClientForREST_Drive
-import GoogleAPIClientForREST_PeopleService
-import GTMAppAuth
 
+/// Root screen: the list of scripts.
 struct DocPickerView: View {
-  @State private var authState: OIDAuthState? {
-    didSet {
-      saveAuthState()
-    }
-  }
-  @State private var userEmail: String?
-  
   @EnvironmentObject private var appDelegate: TelepromptAppDelegate
-  
-  private func getRootViewController() -> UIViewController? {
-    guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-      return nil
-    }
-    return scene.windows.first?.rootViewController
-  }
-  
-  private let docsService = GTLRDocsService()
-  private let driveService = GTLRDriveService()
-  private let peopleService = GTLRPeopleServiceService()
-
-  private func fetchUserEmail() {
-      let query = GTLRPeopleServiceQuery_PeopleGet.query(withResourceName: "people/me")
-      query.personFields = "emailAddresses"
-      
-      peopleService.authorizer = driveService.authorizer
-      
-      peopleService.executeQuery(query) { (ticket, person, error) in
-          if let error = error {
-              print("Error fetching user email: \(error)")
-              return
-          }
-          
-          guard let person = person as? GTLRPeopleService_Person,
-                let emailAddresses = person.emailAddresses,
-                let email = emailAddresses.first?.value else {
-              print("No email address found")
-              return
-          }
-          
-        UserDefaults.standard.set(email, forKey: "email")
-        self.userEmail = email
-      }
-  }
-  
+  @EnvironmentObject private var google: GoogleAccount
   @Environment(\.modelContext) private var modelContext
-  @Query private var cachedDocs: [CachedDocument]
-  
-  @State private var searchText = ""
-  @State private var searchResults : [GTLRDrive_File] = []
-  @State private var googleLoginError : String? = nil
-  @State private var showMenu = false
+  @Environment(\.openURL) private var openURL
+
+  @Query(sort: \CachedDocument.createdTimestamp, order: .reverse)
+  private var scripts: [CachedDocument]
+
   @State private var showNewScript = false
-  @State private var editingDoc: CachedDocument? = nil
-  
+  @State private var showAddGoogleDoc = false
+  @State private var editingScript: CachedDocument?
+
   var body: some View {
-    NavigationView {
-      VStack {
-        VStack(alignment: .leading) {
-          Text("Scripts")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .padding()
-          
-          Button {
-            showNewScript = true
+    NavigationStack {
+      List {
+        ForEach(scripts) { script in
+          NavigationLink {
+            destination(for: script)
           } label: {
-            Label("Paste or type a script", systemImage: "doc.on.clipboard")
+            ScriptRow(script: script)
           }
-          .padding(.horizontal)
-          .padding(.bottom, 8)
-          
-          if authState != nil {
-            HStack {
-              Image(systemName: "magnifyingglass")
-              TextField("Add doc from Google Drive", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.leading, 5)
-            }
-            .padding(.horizontal)
-          } else {
-            Button {
-              startOAuthFlow()
+          .contextMenu { actions(for: script) }
+          .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+              delete(script)
             } label: {
-              Label("Sign in with Google to add Docs", systemImage: "person.crop.circle.badge.plus")
+              Label("Delete", systemImage: "trash")
             }
-            .padding(.horizontal)
-          }
-          if let googleLoginError {
-            Text("There was a problem signing in to your Google account: \(googleLoginError)")
-              .font(.footnote)
-              .foregroundColor(.red)
-              .padding(.horizontal)
-          }
-          if (searchResults.count > 0) {
-            VStack {
-              ForEach(Array(searchResults.prefix(10).enumerated()), id: \.element) { i, document in
-                HStack {
-                  Image(systemName: "doc.text")
-                    .foregroundColor(.blue)
-                  Text(document.name ?? "Unnamed Document")
-                    .font(.body)
-                    .padding(.leading)
-                  Spacer()
-                  Image(systemName: "plus")
-                    .foregroundColor(.blue)
-                }
-                .padding()
-                .cornerRadius(8)
-                .onTapGesture() {
-                  handleSelectedSearchResult(doc: document)
-                }
-              }
-            }
-            .background(Color(UIColor.secondarySystemBackground))
-            .cornerRadius(8)
           }
         }
-        .padding(.bottom, 20)
-        List {
-          ForEach(cachedDocs) { doc in
-            NavigationLink() {
-              if doc.isPastedText {
-                TelepromptView(source: .text(title: doc.title ?? "Script", body: doc.body ?? ""))
-              } else if let authState {
-                TelepromptView(source: .googleDoc(id: doc.googleDocId, authState: authState))
-              } else {
-                VStack(spacing: 12) {
-                  Text("Sign in to your Google account to read this doc.")
-                  Button("Sign in with Google") { startOAuthFlow() }
-                }
-                .padding()
-              }
-            } label: {
-              Label(doc.title ?? doc.googleDocId,
-                    systemImage: doc.isPastedText ? "text.alignleft" : "doc.text")
-            }
-            .contextMenu {
-              if doc.isPastedText {
-                Button {
-                  editingDoc = doc
-                } label: {
-                  Label("Edit Text", systemImage: "pencil")
-                }
-              }
-            }
-            .swipeActions(edge: .leading) {
-              if doc.isPastedText {
-                Button {
-                  editingDoc = doc
-                } label: {
-                  Label("Edit", systemImage: "pencil")
-                }
-                .tint(.blue)
-              }
-            }
+      }
+      .overlay {
+        if scripts.isEmpty {
+          ContentUnavailableView {
+            Label("No Scripts", systemImage: "captions.bubble")
+          } description: {
+            Text("Paste in a script, or add one from Google Docs.")
+          } actions: {
+            Button("New Script") { showNewScript = true }
+              .buttonStyle(.borderedProminent)
+            Button("Add Google Doc") { showAddGoogleDoc = true }
           }
-          .onDelete(perform: deleteDocs)
         }
-        .cornerRadius(8)
-        .listRowInsets(EdgeInsets())
-        .scrollContentBackground(.hidden)
-        .overlay {
-          if cachedDocs.isEmpty {
-            Text("No scripts yet. Paste one in, or sign in to add a Google Doc.")
-              .font(.callout)
-              .foregroundColor(.secondary)
-              .multilineTextAlignment(.center)
-              .padding()
-          }
+      }
+      .navigationTitle("Scripts")
+      .toolbar {
+        ToolbarItemGroup(placement: .topBarTrailing) {
+          moreMenu
+          addMenu
         }
       }
       .sheet(isPresented: $showNewScript) {
         ScriptEditorView()
       }
-      .sheet(item: $editingDoc) { doc in
-        ScriptEditorView(document: doc)
+      .sheet(item: $editingScript) { script in
+        ScriptEditorView(document: script)
       }
-      .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
-          EditButton()
-        }
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button(action: {
-            // Action for trailing button
-            showMenu.toggle()
-          }) {
-            Image(systemName: "person")
-          }
-          
-        }
+      .sheet(isPresented: $showAddGoogleDoc) {
+        AddGoogleDocView(existingIDs: Set(scripts.map(\.googleDocId)))
       }
-      .overlay(
-        VStack {
-          if showMenu {
-            VStack(alignment: .leading, spacing: 10) {
-              Text(userEmail ?? "Signed out")
-              Button(action: {
-                // Select Notes action
-                showMenu = false
-                if (userEmail == nil) {
-                  startOAuthFlow()
-                } else {
-                  signOut()
-                }
-              }) {
-                Text(userEmail == nil ? "Sign in" : "Sign out")
-              }
-              Divider()
-              Text("Transcription")
-                .font(.caption)
-                .foregroundColor(.secondary)
-              Picker("Transcription engine", selection: Binding(
-                get: { appDelegate.selectedEngineKind },
-                set: { appDelegate.selectedEngineKind = $0 }
-              )) {
-                ForEach(TranscriptionEngineKind.allCases) { kind in
-                  Text(kind.displayName).tag(kind)
-                }
-              }
-              .pickerStyle(.inline)
-            }
-            .padding()
-            .background(Color(UIColor.secondarySystemBackground))
-            .cornerRadius(8)
-            .shadow(radius: 10)
-            .frame(width: 320)
-            .transition(.opacity)
-          }
-        }
-          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-      )
-      .onAppear {
-        // Restore a saved Google session if there is one, but don't force
-        // sign-in: pasted scripts work without a Google account.
-        loadAuthState()
+      .alert("Couldn't Sign In", isPresented: signInErrorBinding) {
+        Button("OK", role: .cancel) {}
+      } message: {
+        Text(google.signInError ?? "")
       }
       .onOpenURL { url in
-        handleOAuthCallback(with: url)
-      }
-      .onChange(of: searchText) {
-        if (searchText.count > 0) {
-          handleSearch(queryText:searchText)
+        if let flow = appDelegate.currentAuthorizationFlow, flow.resumeExternalUserAgentFlow(with: url) {
+          appDelegate.currentAuthorizationFlow = nil
         }
       }
     }
   }
-  
-  private func handleSelectedSearchResult(doc: GTLRDrive_File) {
-    print("Selected \(doc)")
-    DispatchQueue.main.async {
-      self.searchText = ""
-      self.searchResults = []
-      addItem(googleDocId: doc.identifier!, title: doc.name ?? "Untitled Doc")
-      
-      //fetchDocumentContent(documentId: doc.identifier!)
+
+  // MARK: - Menus
+
+  private var addMenu: some View {
+    Menu {
+      Button {
+        showNewScript = true
+      } label: {
+        Label("New Script", systemImage: "square.and.pencil")
+      }
+      Button {
+        showAddGoogleDoc = true
+      } label: {
+        Label("Add Google Doc", systemImage: "doc.badge.plus")
+      }
+    } label: {
+      Label("Add", systemImage: "plus")
     }
   }
-  
-  private func handleSearch(queryText: String) {
-    if (driveService.authorizer == nil) {
-      return
-    }
-    
-    let query = GTLRDriveQuery_FilesList.query()
-    if !queryText.isEmpty {
-      query.q = "mimeType='application/vnd.google-apps.document' and name contains '\(queryText)'"
-    } else {
-      query.q = "mimeType='application/vnd.google-apps.document'"
-    }
-    query.fields = "files(id, name)"
-    
-    driveService.executeQuery(query) { (ticket, result, error) in
-      if let error = error {
-        print("Error fetching documents: \(error)")
-        return
+
+  private var moreMenu: some View {
+    Menu {
+      Picker(selection: engineBinding) {
+        ForEach(TranscriptionEngineKind.allCases) { kind in
+          Text(kind.displayName).tag(kind)
+        }
+      } label: {
+        Label("Speech Recognition", systemImage: "waveform")
       }
-      
-      if let files = (result as? GTLRDrive_FileList)?.files {
-        self.searchResults = files
-        print("results \(files)")
-      }
-    }
-    
-  }
-  
-  private func addItem(googleDocId: String, title: String) {
-    withAnimation {
-      let newItem = CachedDocument(createdTimestamp: Date(), googleDocId: googleDocId, title: title)
-      modelContext.insert(newItem)
-    }
-  }
-  
-  private func deleteDocs(offsets: IndexSet) {
-    withAnimation {
-      for index in offsets {
-        modelContext.delete(cachedDocs[index])
-      }
-    }
-  }
-  
-  // ---- Auth stuff
-  
-  private func startOAuthFlow() {
-    self.googleLoginError = nil
-    let issuer = URL(string: "https://accounts.google.com")!
-    let clientID = "77437963566-sa51d7s3qqbpo3fgbedtietik1sp7etl.apps.googleusercontent.com"
-    let redirectURI = URL(string: "com.googleusercontent.apps.77437963566-sa51d7s3qqbpo3fgbedtietik1sp7etl:/oauthredirect")!
-    let scopes = [OIDScopeOpenID, OIDScopeProfile, "https://www.googleapis.com/auth/userinfo.email",
-                  "https://www.googleapis.com/auth/documents.readonly",
-                  "https://www.googleapis.com/auth/drive.readonly"]
-    
-    // Use OIDServiceConfiguration to discover endpoints
-    OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { configuration, error in
-      guard let configuration = configuration else {
-        print("Error retrieving discovery document: \(error?.localizedDescription ?? "Unknown error")")
-        return
-      }
-      
-      let request = OIDAuthorizationRequest(configuration: configuration,
-                                            clientId: clientID,
-                                            clientSecret: nil,
-                                            scopes: scopes,
-                                            redirectURL: redirectURI,
-                                            responseType: OIDResponseTypeCode,
-                                            additionalParameters: nil)
-      
-      appDelegate.currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, presenting: getRootViewController()!) { authState, error in
-        if let authState = authState {
-          self.authState = authState
-          self.docsService.authorizer = AuthSession(authState: authState)
-          self.driveService.authorizer = AuthSession(authState: authState)
-          fetchUserEmail()
+      .pickerStyle(.menu)
+
+      Section(google.email ?? "Google Account") {
+        if google.isSignedIn {
+          Button(role: .destructive) {
+            google.signOut()
+          } label: {
+            Label("Sign Out of Google", systemImage: "rectangle.portrait.and.arrow.right")
+          }
         } else {
-          print("Authorization error: \(error?.localizedDescription ?? "Unknown error")")
-          self.googleLoginError = error?.localizedDescription ?? "Unknown error"
+          Button {
+            google.signIn(appDelegate: appDelegate)
+          } label: {
+            Label("Sign In to Google", systemImage: "person.crop.circle")
+          }
         }
       }
+    } label: {
+      Label("More", systemImage: "ellipsis.circle")
     }
   }
-  
-  private func handleOAuthCallback(with url: URL) {
-    let appDelegate = UIApplication.shared.delegate as! TelepromptAppDelegate
-    if let authorizationFlow = appDelegate.currentAuthorizationFlow, authorizationFlow.resumeExternalUserAgentFlow(with: url) {
-      appDelegate.currentAuthorizationFlow = nil
-    }
-  }
-  
-  private func saveAuthState() {
-    guard let authState = self.authState else { return }
-    
-    do {
-      let data = try NSKeyedArchiver.archivedData(withRootObject: authState, requiringSecureCoding: true)
-      UserDefaults.standard.set(data, forKey: "authState")
-    } catch {
-      print("Failed to save auth state: \(error)")
-    }
-  }
-  
-  private func signOut() {
-    authState = nil
-    userEmail = nil
-    docsService.authorizer = nil
-    driveService.authorizer = nil
-    peopleService.authorizer = nil
-    UserDefaults.standard.removeObject(forKey: "authState")
-    UserDefaults.standard.removeObject(forKey: "email")
-  }
-  
-  func loadAuthState() {
-    if let data = UserDefaults.standard.object(forKey: "authState") as? Data {
-      if let authState = try! NSKeyedUnarchiver.unarchivedObject(ofClass: OIDAuthState.self, from: data) {
-        self.authState = authState
-        self.docsService.authorizer = AuthSession(authState: authState)
-        self.driveService.authorizer = AuthSession(authState: authState)
-        self.peopleService.authorizer = AuthSession(authState: authState)
-        fetchUserEmail()
+
+  @ViewBuilder
+  private func actions(for script: CachedDocument) -> some View {
+    if script.isPastedText {
+      Button {
+        editingScript = script
+      } label: {
+        Label("Edit", systemImage: "pencil")
+      }
+    } else {
+      Button {
+        if let url = URL(string: "https://docs.google.com/document/d/\(script.googleDocId)/edit") {
+          openURL(url)
+        }
+      } label: {
+        Label("Open in Google Docs", systemImage: "arrow.up.forward.app")
       }
     }
+    Divider()
+    Button(role: .destructive) {
+      delete(script)
+    } label: {
+      Label("Delete", systemImage: "trash")
+    }
+  }
+
+  // MARK: - Destinations
+
+  @ViewBuilder
+  private func destination(for script: CachedDocument) -> some View {
+    if script.isPastedText {
+      TelepromptView(source: .text(title: script.title ?? "Script", body: script.body ?? ""))
+    } else if let authState = google.authState {
+      TelepromptView(source: .googleDoc(id: script.googleDocId, authState: authState))
+    } else {
+      ContentUnavailableView {
+        Label("Sign In to Google", systemImage: "person.crop.circle")
+      } description: {
+        Text("This script is a Google Doc. Sign in to load it.")
+      } actions: {
+        Button("Sign In") { google.signIn(appDelegate: appDelegate) }
+          .buttonStyle(.borderedProminent)
+      }
+    }
+  }
+
+  // MARK: - Helpers
+
+  private var engineBinding: Binding<TranscriptionEngineKind> {
+    Binding(get: { appDelegate.selectedEngineKind },
+            set: { appDelegate.selectedEngineKind = $0 })
+  }
+
+  private var signInErrorBinding: Binding<Bool> {
+    Binding(get: { google.signInError != nil },
+            set: { if !$0 { google.signInError = nil } })
+  }
+
+  private func delete(_ script: CachedDocument) {
+    withAnimation {
+      modelContext.delete(script)
+    }
+  }
+}
+
+/// One row in the script list: title plus a quiet secondary line.
+private struct ScriptRow: View {
+  let script: CachedDocument
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 2) {
+      Text(script.title ?? "Untitled")
+        .lineLimit(1)
+      Text(subtitle)
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .lineLimit(1)
+    }
+  }
+
+  private var subtitle: String {
+    let when = script.lastFetchedTimestamp ?? script.createdTimestamp
+    let date = Calendar.current.isDate(when, equalTo: .now, toGranularity: .year)
+      ? when.formatted(.dateTime.month(.abbreviated).day())
+      : when.formatted(date: .abbreviated, time: .omitted)
+    if script.isPastedText {
+      let words = (script.body ?? "").split(whereSeparator: { $0.isWhitespace }).count
+      return "\(date) · \(words) words"
+    }
+    return "\(date) · Google Doc"
   }
 }

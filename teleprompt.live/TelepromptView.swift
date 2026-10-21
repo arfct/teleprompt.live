@@ -83,6 +83,7 @@ struct TelepromptView: View {
       }
       .id("scrollViewReader")
       .navigationTitle(docTitle ?? "Loading…")
+      .navigationBarTitleDisplayMode(.inline)
       .toolbar {
         if isGoogleDoc {
           Button(action: loadDoc) {

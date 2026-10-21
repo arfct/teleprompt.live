@@ -10,8 +10,8 @@ struct ScriptEditorView: View {
   /// nil = creating a new script.
   let document: CachedDocument?
 
-  @State private var title: String = ""
-  @State private var text: String = ""
+  @State private var title: String
+  @State private var text: String
 
   init(document: CachedDocument? = nil) {
     self.document = document
@@ -23,41 +23,36 @@ struct ScriptEditorView: View {
     !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
 
+  private var wordCount: Int {
+    text.split(whereSeparator: { $0.isWhitespace }).count
+  }
+
   var body: some View {
     NavigationStack {
-      VStack(alignment: .leading, spacing: 12) {
-        TextField("Title (optional)", text: $title)
-          .textFieldStyle(.roundedBorder)
-
-        ZStack(alignment: .topLeading) {
-          TextEditor(text: $text)
-            .font(.body)
-            .scrollContentBackground(.hidden)
-            .padding(4)
-            .background(Color(UIColor.secondarySystemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-          if text.isEmpty {
-            Text("Paste or type your script")
-              .foregroundColor(.secondary)
-              .padding(.horizontal, 10)
-              .padding(.vertical, 12)
-              .allowsHitTesting(false)
-          }
+      Form {
+        Section {
+          TextField("Title", text: $title)
         }
-
-        HStack {
-          PasteButton(payloadType: String.self) { strings in
-            guard let pasted = strings.first else { return }
-            DispatchQueue.main.async { text = pasted }
+        Section {
+          TextEditor(text: $text)
+            .frame(minHeight: 280)
+        } header: {
+          Text("Script")
+        } footer: {
+          HStack {
+            if text.isEmpty {
+              PasteButton(payloadType: String.self) { strings in
+                guard let pasted = strings.first else { return }
+                DispatchQueue.main.async { text = pasted }
+              }
+              .labelStyle(.titleAndIcon)
+              .buttonBorderShape(.capsule)
+            }
+            Spacer()
+            Text("\(wordCount) words")
           }
-          .labelStyle(.titleAndIcon)
-          Spacer()
-          Text("\(wordCount) words")
-            .font(.footnote)
-            .foregroundColor(.secondary)
         }
       }
-      .padding()
       .navigationTitle(document == nil ? "New Script" : "Edit Script")
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
@@ -70,10 +65,6 @@ struct ScriptEditorView: View {
         }
       }
     }
-  }
-
-  private var wordCount: Int {
-    text.split(whereSeparator: { $0.isWhitespace }).count
   }
 
   private func save() {
