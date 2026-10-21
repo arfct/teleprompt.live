@@ -41,6 +41,7 @@
 		AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SE02D000000A00000SE /* ScriptEditorView.swift */; };
 		AA00GA12D000000A00001GA /* GoogleAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00GA02D000000A00000GA /* GoogleAccount.swift */; };
 		AA00AG12D000000A00001AG /* AddGoogleDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00AG02D000000A00000AG /* AddGoogleDocView.swift */; };
+		AA00SS12D000000A00001SS /* StarterScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SS02D000000A00000SS /* StarterScripts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		AA00SE02D000000A00000SE /* ScriptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEditorView.swift; sourceTree = "<group>"; };
 		AA00GA02D000000A00000GA /* GoogleAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAccount.swift; sourceTree = "<group>"; };
 		AA00AG02D000000A00000AG /* AddGoogleDocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoogleDocView.swift; sourceTree = "<group>"; };
+		AA00SS02D000000A00000SS /* StarterScripts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterScripts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				AA00SE02D000000A00000SE /* ScriptEditorView.swift */,
 				AA00GA02D000000A00000GA /* GoogleAccount.swift */,
 				AA00AG02D000000A00000AG /* AddGoogleDocView.swift */,
+				AA00SS02D000000A00000SS /* StarterScripts.swift */,
 			);
 			path = teleprompt.live;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */,
 				AA00GA12D000000A00001GA /* GoogleAccount.swift in Sources */,
 				AA00AG12D000000A00001AG /* AddGoogleDocView.swift in Sources */,
+				AA00SS12D000000A00001SS /* StarterScripts.swift in Sources */,
 				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
 				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
 				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,
@@ -314,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -371,7 +375,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

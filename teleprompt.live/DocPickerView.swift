@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-/// Root screen: the list of scripts.
+/// Root screen: a grid of script cards.
 struct DocPickerView: View {
   @EnvironmentObject private var appDelegate: TelepromptAppDelegate
   @EnvironmentObject private var google: GoogleAccount
@@ -14,26 +14,52 @@ struct DocPickerView: View {
   @State private var showNewScript = false
   @State private var showAddGoogleDoc = false
   @State private var editingScript: CachedDocument?
+  @State private var path: [PersistentIdentifier] = []
+  #if DEBUG
+  @State private var demoDidRun = false
+  #endif
+
+  /// Shared by each card (zoom source) and its teleprompter (zoom destination).
+  @Namespace private var zoom
+
+  private let columns = [GridItem(.adaptive(minimum: 160), spacing: 16, alignment: .top)]
 
   var body: some View {
-    NavigationStack {
-      List {
-        ForEach(scripts) { script in
-          NavigationLink {
-            destination(for: script)
-          } label: {
-            ScriptRow(script: script)
-          }
-          .contextMenu { actions(for: script) }
-          .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-              delete(script)
-            } label: {
-              Label("Delete", systemImage: "trash")
+    NavigationStack(path: $path) {
+      ScrollView {
+        LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
+          ForEach(scripts) { script in
+            NavigationLink(value: script.persistentModelID) {
+              ScriptCard(script: script, zoom: zoom)
             }
+            .buttonStyle(.plain)
+            .contextMenu { actions(for: script) }
           }
         }
+        .padding(.horizontal)
+        .padding(.bottom)
       }
+      .navigationDestination(for: PersistentIdentifier.self) { id in
+        if let script = scripts.first(where: { $0.persistentModelID == id }) {
+          destination(for: script)
+            .navigationTransition(.zoom(sourceID: id, in: zoom))
+        }
+      }
+      #if DEBUG
+      .task {
+        // `-UIDemoZoom`: open the first card, then go back, for recording
+        // the zoom transition in the simulator.
+        guard ProcessInfo.processInfo.arguments.contains("-UIDemoZoom"), !demoDidRun, let first = scripts.first else { return }
+        demoDidRun = true
+        // Slow Core Animation so simulator recordings (which drop frames
+        // during fast animations) capture the whole transition.
+        GoogleAccount.topViewController()?.view.window?.layer.speed = 0.2
+        try? await Task.sleep(for: .seconds(2))
+        path = [first.persistentModelID]
+        try? await Task.sleep(for: .seconds(5))
+        path = []
+      }
+      #endif
       .overlay {
         if scripts.isEmpty {
           ContentUnavailableView {
@@ -49,6 +75,7 @@ struct DocPickerView: View {
       }
       .navigationTitle("Scripts")
       .toolbar {
+        // One group, so the system draws a single control holding both menus.
         ToolbarItemGroup(placement: .topBarTrailing) {
           moreMenu
           addMenu
@@ -122,7 +149,7 @@ struct DocPickerView: View {
         }
       }
     } label: {
-      Label("More", systemImage: "ellipsis.circle")
+      Label("More", systemImage: "ellipsis")
     }
   }
 
@@ -158,7 +185,7 @@ struct DocPickerView: View {
     if script.isPastedText {
       TelepromptView(source: .text(title: script.title ?? "Script", body: script.body ?? ""))
     } else if let authState = google.authState {
-      TelepromptView(source: .googleDoc(id: script.googleDocId, authState: authState))
+      TelepromptView(source: .googleDoc(id: script.googleDocId, authState: authState), cache: script)
     } else {
       ContentUnavailableView {
         Label("Sign In to Google", systemImage: "person.crop.circle")
@@ -190,19 +217,71 @@ struct DocPickerView: View {
   }
 }
 
-/// One row in the script list: title plus a quiet secondary line.
-private struct ScriptRow: View {
+/// A square preview of the script, styled like the teleprompter it opens
+/// into (white on black), with the title and date underneath.
+private struct ScriptCard: View {
   let script: CachedDocument
+  let zoom: Namespace.ID
+
+  private static let shape = RoundedRectangle(cornerRadius: 18, style: .continuous)
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 2) {
-      Text(script.title ?? "Untitled")
-        .lineLimit(1)
-      Text(subtitle)
-        .font(.subheadline)
-        .foregroundStyle(.secondary)
-        .lineLimit(1)
+    VStack(alignment: .leading, spacing: 8) {
+      preview
+        .aspectRatio(1, contentMode: .fit)
+        .matchedTransitionSource(id: script.persistentModelID, in: zoom)
+
+      VStack(alignment: .leading, spacing: 1) {
+        Text(script.title ?? "Untitled")
+          .font(.subheadline.weight(.semibold))
+          .lineLimit(1)
+        Text(subtitle)
+          .font(.caption)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
+      }
+      .padding(.horizontal, 4)
     }
+    .contentShape(Rectangle())
+  }
+
+  private var preview: some View {
+    Self.shape
+      .fill(Color.black)
+      .overlay {
+        if let text = previewText {
+          // A card-sized clear view anchors the (taller) text to the top
+          // and gives the fade mask the card's bounds, so long scripts
+          // run off the bottom and fade instead of centering or truncating.
+          Color.clear
+            .overlay(alignment: .topLeading) {
+              Text(text)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(.white)
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(14)
+            }
+            .mask {
+              LinearGradient(stops: [.init(color: .black, location: 0.7),
+                                     .init(color: .clear, location: 0.97)],
+                             startPoint: .top, endPoint: .bottom)
+            }
+        } else {
+          Image(systemName: "doc.text")
+            .font(.system(size: 34, weight: .light))
+            .foregroundStyle(.white.opacity(0.45))
+        }
+      }
+      .clipShape(Self.shape)
+      .overlay {
+        Self.shape.strokeBorder(Color(uiColor: .separator), lineWidth: 0.5)
+      }
+  }
+
+  private var previewText: String? {
+    guard let body = script.body?.trimmingCharacters(in: .whitespacesAndNewlines), !body.isEmpty else { return nil }
+    return String(body.prefix(400))
   }
 
   private var subtitle: String {

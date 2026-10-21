@@ -24,6 +24,7 @@ struct teleprompt_liveApp: App {
       #if DEBUG
       if inMemory { SampleScripts.insert(into: container) }
       #endif
+      if !inMemory { StarterScripts.seedIfNeeded(into: container) }
       return container
     } catch {
       fatalError("Could not create ModelContainer: \(error)")
@@ -46,17 +47,25 @@ enum SampleScripts {
     let day: TimeInterval = 86_400
     let now = Date()
     context.insert(CachedDocument(createdTimestamp: now.addingTimeInterval(-6 * day), googleDocId: "sample-doc-1",
-                                  title: "Q4 All-Hands Opening"))
+                                  lastFetchedTimestamp: now.addingTimeInterval(-6 * day),
+                                  title: "Q4 All-Hands Opening",
+                                  body: "Good morning, everyone. Thanks for being here. It's been a big quarter, and I want to start with the people who made it happen."))
     context.insert(CachedDocument(createdTimestamp: now.addingTimeInterval(-3 * day), googleDocId: "",
                                   lastFetchedTimestamp: now.addingTimeInterval(-3 * day),
                                   title: "Product Launch Keynote",
                                   body: String(repeating: "Today we're introducing something new. ", count: 60)))
     context.insert(CachedDocument(createdTimestamp: now.addingTimeInterval(-1 * day), googleDocId: "sample-doc-2",
                                   title: "Wedding Toast"))
+    context.insert(CachedDocument(createdTimestamp: now.addingTimeInterval(-2 * 3600), googleDocId: "",
+                                  lastFetchedTimestamp: now.addingTimeInterval(-2 * 3600),
+                                  title: "Conference Talk",
+                                  body: "Hi, I'm Nick. For the next twenty minutes I want to talk about the gap between what we say and what we read."))
     context.insert(CachedDocument(createdTimestamp: now, googleDocId: "",
                                   lastFetchedTimestamp: now,
                                   title: "Podcast Intro",
                                   body: "Welcome back to the show. This week we talk about how teleprompters actually work."))
+    // Starter script last, so it's newest and leads the grid.
+    StarterScripts.insertAll(into: context)
     try? context.save()
   }
 }

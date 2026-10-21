@@ -33,8 +33,13 @@ struct TelepromptView: View {
 
   private let service = GTLRDocsService()
 
-  init(source: ScriptSource) {
+  /// Stored script to show immediately and to update after a Google Doc
+  /// load (feeds the grid preview and makes reopening instant/offline).
+  private let cache: CachedDocument?
+
+  init(source: ScriptSource, cache: CachedDocument? = nil) {
     self.source = source
+    self.cache = cache
     if case .googleDoc(_, let authState) = source {
       self.service.authorizer = AuthSession(authState: authState)
     }
@@ -70,6 +75,8 @@ struct TelepromptView: View {
             }
           }
           .id("documentContent")
+          .padding(.horizontal, 20)
+          .padding(.vertical, 12)
           .onAppear {
             self.scrollViewProxy = proxy
           }
@@ -141,6 +148,10 @@ struct TelepromptView: View {
   private func loadDoc() {
     switch source {
     case .googleDoc(let id, _):
+      if documentPieces.isEmpty, let cached = cache?.body, !cached.isEmpty {
+        docTitle = cache?.title
+        applyContent(cached)
+      }
       fetchDocumentContent(documentId: id)
     case .text(let title, let body):
       docTitle = title
@@ -152,6 +163,10 @@ struct TelepromptView: View {
     documentContent = content
     documentPieces = splitStringIntoSentences(text: content)
 
+    #if DEBUG
+    // Demo recordings shouldn't trigger mic/speech permission prompts.
+    if ProcessInfo.processInfo.arguments.contains("-UIDemoZoom") { return }
+    #endif
     if !isListening {
       appDelegate.startAnalyzingAudio()
       isListening = true
@@ -190,7 +205,14 @@ struct TelepromptView: View {
       DispatchQueue.main.async {
         self.loadError = nil
         self.docTitle = document.title
-        self.applyContent(content)
+        if content != self.documentContent {
+          self.applyContent(content)
+        }
+        if let cache = self.cache {
+          cache.body = content
+          if let title = document.title { cache.title = title }
+          cache.lastFetchedTimestamp = Date()
+        }
       }
     }
   }
