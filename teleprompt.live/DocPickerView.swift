@@ -60,6 +60,8 @@ struct DocPickerView: View {
   @State private var searchResults : [GTLRDrive_File] = []
   @State private var googleLoginError : String? = nil
   @State private var showMenu = false
+  @State private var showNewScript = false
+  @State private var editingDoc: CachedDocument? = nil
   
   var body: some View {
     NavigationView {
@@ -70,13 +72,36 @@ struct DocPickerView: View {
             .fontWeight(.bold)
             .padding()
           
-          HStack {
-            Image(systemName: "magnifyingglass")
-            TextField("Add doc from Google Drive", text: $searchText)
-              .textFieldStyle(RoundedBorderTextFieldStyle())
-              .padding(.leading, 5)
+          Button {
+            showNewScript = true
+          } label: {
+            Label("Paste or type a script", systemImage: "doc.on.clipboard")
           }
           .padding(.horizontal)
+          .padding(.bottom, 8)
+          
+          if authState != nil {
+            HStack {
+              Image(systemName: "magnifyingglass")
+              TextField("Add doc from Google Drive", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.leading, 5)
+            }
+            .padding(.horizontal)
+          } else {
+            Button {
+              startOAuthFlow()
+            } label: {
+              Label("Sign in with Google to add Docs", systemImage: "person.crop.circle.badge.plus")
+            }
+            .padding(.horizontal)
+          }
+          if let googleLoginError {
+            Text("There was a problem signing in to your Google account: \(googleLoginError)")
+              .font(.footnote)
+              .foregroundColor(.red)
+              .padding(.horizontal)
+          }
           if (searchResults.count > 0) {
             VStack {
               ForEach(Array(searchResults.prefix(10).enumerated()), id: \.element) { i, document in
@@ -102,34 +127,64 @@ struct DocPickerView: View {
           }
         }
         .padding(.bottom, 20)
-        if (googleLoginError != nil) {
-          VStack {
-            Text("There was a problem signing in to your Google account: \(googleLoginError!)")
-              .font(.subheadline)
-            Button("Try again") {
-              startOAuthFlow()
-            }
-          }
-          .frame(maxWidth:.infinity, maxHeight:.infinity, alignment:.topLeading)
-        } else {
-          List {
-            ForEach(cachedDocs) { doc in
-              NavigationLink() {
-                if (authState != nil) {
-                  TelepromptView(googleDocId: doc.googleDocId, authState: authState!)
-                } else {
-                  Text("You must be signed in to your Google Account to start teleprompting.")
+        List {
+          ForEach(cachedDocs) { doc in
+            NavigationLink() {
+              if doc.isPastedText {
+                TelepromptView(source: .text(title: doc.title ?? "Script", body: doc.body ?? ""))
+              } else if let authState {
+                TelepromptView(source: .googleDoc(id: doc.googleDocId, authState: authState))
+              } else {
+                VStack(spacing: 12) {
+                  Text("Sign in to your Google account to read this doc.")
+                  Button("Sign in with Google") { startOAuthFlow() }
                 }
-              } label: {
-                Text(doc.title ?? doc.googleDocId)
+                .padding()
+              }
+            } label: {
+              Label(doc.title ?? doc.googleDocId,
+                    systemImage: doc.isPastedText ? "text.alignleft" : "doc.text")
+            }
+            .contextMenu {
+              if doc.isPastedText {
+                Button {
+                  editingDoc = doc
+                } label: {
+                  Label("Edit Text", systemImage: "pencil")
+                }
               }
             }
-            .onDelete(perform: deleteDocs)
+            .swipeActions(edge: .leading) {
+              if doc.isPastedText {
+                Button {
+                  editingDoc = doc
+                } label: {
+                  Label("Edit", systemImage: "pencil")
+                }
+                .tint(.blue)
+              }
+            }
           }
-          .cornerRadius(8)
-          .listRowInsets(EdgeInsets())
-          .scrollContentBackground(.hidden)
+          .onDelete(perform: deleteDocs)
         }
+        .cornerRadius(8)
+        .listRowInsets(EdgeInsets())
+        .scrollContentBackground(.hidden)
+        .overlay {
+          if cachedDocs.isEmpty {
+            Text("No scripts yet. Paste one in, or sign in to add a Google Doc.")
+              .font(.callout)
+              .foregroundColor(.secondary)
+              .multilineTextAlignment(.center)
+              .padding()
+          }
+        }
+      }
+      .sheet(isPresented: $showNewScript) {
+        ScriptEditorView()
+      }
+      .sheet(item: $editingDoc) { doc in
+        ScriptEditorView(document: doc)
       }
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -186,10 +241,9 @@ struct DocPickerView: View {
           .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
       )
       .onAppear {
+        // Restore a saved Google session if there is one, but don't force
+        // sign-in: pasted scripts work without a Google account.
         loadAuthState()
-        if authState == nil {
-          startOAuthFlow()
-        }
       }
       .onOpenURL { url in
         handleOAuthCallback(with: url)

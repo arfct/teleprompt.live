@@ -17,4 +17,9 @@ final class CachedDocument {
     self.lastFetchedTimestamp = lastFetchedTimestamp
   }
 
+  /// Scripts pasted/typed into the app have no Google Doc behind them; their
+  /// text lives in `body`. (Kept as a computed property so no SwiftData
+  /// schema migration is needed.)
+  var isPastedText: Bool { googleDocId.isEmpty }
+
 }

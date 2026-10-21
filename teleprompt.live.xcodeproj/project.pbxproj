@@ -38,6 +38,7 @@
 		AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */; };
 		AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */; };
 		AA00IC12D000000A00001IC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AA00IC02D000000A00000IC /* AppIcon.icon */; };
+		AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SE02D000000A00000SE /* ScriptEditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramTranscriptionEngine.swift; sourceTree = "<group>"; };
 		AA00IC02D000000A00000IC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		AA00EN02D000000A00000EN /* teleprompt.live-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "teleprompt.live-macOS.entitlements"; sourceTree = "<group>"; };
+		AA00SE02D000000A00000SE /* ScriptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */,
 				AA00IC02D000000A00000IC /* AppIcon.icon */,
 				AA00EN02D000000A00000EN /* teleprompt.live-macOS.entitlements */,
+				AA00SE02D000000A00000SE /* ScriptEditorView.swift */,
 			);
 			path = teleprompt.live;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */,
 				AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */,
 				AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */,
+				AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */,
 				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
 				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
 				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,
