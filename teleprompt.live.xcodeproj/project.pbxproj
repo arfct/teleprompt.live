@@ -37,6 +37,7 @@
 		AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00TE02D000000A00000TE /* TranscriptionEngine.swift */; };
 		AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */; };
 		AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */; };
+		AA00IC12D000000A00001IC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AA00IC02D000000A00000IC /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		AA00TE02D000000A00000TE /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
 		AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceTranscriptionEngine.swift; sourceTree = "<group>"; };
 		AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramTranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00IC02D000000A00000IC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				AA00TE02D000000A00000TE /* TranscriptionEngine.swift */,
 				AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */,
 				AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */,
+				AA00IC02D000000A00000IC /* AppIcon.icon */,
 			);
 			path = teleprompt.live;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			files = (
 				AAB3C5622C3362D900D47368 /* Preview Assets.xcassets in Resources */,
 				AAB3C55F2C3362D900D47368 /* Assets.xcassets in Resources */,
+				AA00IC12D000000A00001IC /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +374,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
@@ -401,7 +405,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
 				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
