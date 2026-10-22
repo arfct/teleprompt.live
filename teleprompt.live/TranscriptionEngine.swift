@@ -23,8 +23,8 @@ enum TranscriptionEngineKind: String, CaseIterable, Identifiable {
 
   var displayName: String {
     switch self {
-    case .onDevice: return "On-device (Apple Speech)"
-    case .deepgram: return "Deepgram (cloud)"
+    case .onDevice: return "On Device"
+    case .deepgram: return "Deepgram"
     }
   }
 }

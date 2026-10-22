@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AA4A8B502C349E6000E3DFE0 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8B4F2C349E6000E3DFE0 /* Starscream */; };
-		AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */; };
-		AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */; };
+		AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SD02D000000A00000SD /* ScriptDocument.swift */; };
+		AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00ST02D000000A00000ST /* ScriptTracker.swift */; };
+		AA00SV12D000000A00001SV /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SV02D000000A00000SV /* SettingsView.swift */; };
 		AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */; };
 		AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */; };
 		AA4A8BA72C37513200E3DFE0 /* ScriptScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */; };
@@ -46,8 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMatcher.swift; sourceTree = "<group>"; };
-		AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceMatcher.swift; sourceTree = "<group>"; };
+		AA00SD02D000000A00000SD /* ScriptDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptDocument.swift; sourceTree = "<group>"; };
+		AA00ST02D000000A00000ST /* ScriptTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptTracker.swift; sourceTree = "<group>"; };
+		AA00SV02D000000A00000SV /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPickerView.swift; sourceTree = "<group>"; };
 		AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptScrollView.swift; sourceTree = "<group>"; };
 		AAB3C5552C3362D800D47368 /* teleprompt.live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teleprompt.live.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,8 +124,9 @@
 				AAB3C55A2C3362D800D47368 /* TelepromptView.swift */,
 				AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */,
 				AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */,
-				AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */,
-				AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */,
+				AA00SD02D000000A00000SD /* ScriptDocument.swift */,
+				AA00ST02D000000A00000ST /* ScriptTracker.swift */,
+				AA00SV02D000000A00000SV /* SettingsView.swift */,
 				AAB3C55C2C3362D800D47368 /* CachedDocument.swift */,
 				AAB3C55E2C3362D900D47368 /* Assets.xcassets */,
 				AAB3C5602C3362D900D47368 /* Preview Content */,
@@ -262,8 +265,9 @@
 				AA00SS12D000000A00001SS /* StarterScripts.swift in Sources */,
 				AA00SA12D000000A00001SA /* SpeechAnalyzerTranscriptionEngine.swift in Sources */,
 				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
-				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
-				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,
+				AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */,
+				AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */,
+				AA00SV12D000000A00001SV /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

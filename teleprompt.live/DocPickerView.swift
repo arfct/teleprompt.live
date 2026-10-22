@@ -13,6 +13,7 @@ struct DocPickerView: View {
 
   @State private var showNewScript = false
   @State private var showAddGoogleDoc = false
+  @State private var showSettings = false
   @State private var editingScript: CachedDocument?
   @State private var path: [PersistentIdentifier] = []
   #if DEBUG
@@ -49,7 +50,20 @@ struct DocPickerView: View {
       .task {
         // `-UIDemoZoom`: open the first card, then go back, for recording
         // the zoom transition in the simulator.
-        guard ProcessInfo.processInfo.arguments.contains("-UIDemoZoom"), !demoDidRun, let first = scripts.first else { return }
+        guard !demoDidRun, let first = scripts.first else { return }
+        let args = ProcessInfo.processInfo.arguments
+        // `-UIDemoOpen`: open the first card and stay (teleprompter demos).
+        if args.contains("-UIDemoOpen") {
+          demoDidRun = true
+          path = [first.persistentModelID]
+          return
+        }
+        if args.contains("-UIDemoSettings") {
+          demoDidRun = true
+          showSettings = true
+          return
+        }
+        guard args.contains("-UIDemoZoom") else { return }
         demoDidRun = true
         // Slow Core Animation so simulator recordings (which drop frames
         // during fast animations) capture the whole transition.
@@ -90,6 +104,9 @@ struct DocPickerView: View {
       .sheet(isPresented: $showAddGoogleDoc) {
         AddGoogleDocView(existingIDs: Set(scripts.map(\.googleDocId)))
       }
+      .sheet(isPresented: $showSettings) {
+        SettingsView()
+      }
       .alert("Couldn't Sign In", isPresented: signInErrorBinding) {
         Button("OK", role: .cancel) {}
       } message: {
@@ -124,14 +141,11 @@ struct DocPickerView: View {
 
   private var moreMenu: some View {
     Menu {
-      Picker(selection: engineBinding) {
-        ForEach(TranscriptionEngineKind.allCases) { kind in
-          Text(kind.displayName).tag(kind)
-        }
+      Button {
+        showSettings = true
       } label: {
-        Label("Speech Recognition", systemImage: "waveform")
+        Label("Settings…", systemImage: "gearshape")
       }
-      .pickerStyle(.menu)
 
       Section(google.email ?? "Google Account") {
         if google.isSignedIn {
@@ -199,11 +213,6 @@ struct DocPickerView: View {
   }
 
   // MARK: - Helpers
-
-  private var engineBinding: Binding<TranscriptionEngineKind> {
-    Binding(get: { appDelegate.selectedEngineKind },
-            set: { appDelegate.selectedEngineKind = $0 })
-  }
 
   private var signInErrorBinding: Binding<Bool> {
     Binding(get: { google.signInError != nil },
