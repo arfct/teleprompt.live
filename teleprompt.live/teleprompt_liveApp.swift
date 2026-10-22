@@ -6,6 +6,10 @@ struct teleprompt_liveApp: App {
   @UIApplicationDelegateAdaptor private var appDelegate: TelepromptAppDelegate
   @StateObject private var google = GoogleAccount()
 
+  init() {
+    ScriptDocument.prepareTagger()
+  }
+
   var sharedModelContainer: ModelContainer = {
     let schema = Schema([
       CachedDocument.self,

@@ -15,6 +15,12 @@ final class ScriptTracker {
   private(set) var document: ScriptDocument
   /// Per script word: matched (or forgiven, between matches) at least once.
   private(set) var heard: [Bool]
+  /// When each word was first heard (drives the fade).
+  private(set) var heardAt: [Date?]
+  /// When each sentence first passed `saidThreshold`.
+  private(set) var sentenceSaidAt: [Date?]
+  /// When the speaker first moved past each paragraph's last word.
+  private(set) var paragraphDoneAt: [Date?]
   /// Index of the last word confirmed spoken; -1 before the first.
   private(set) var cursor: Int = -1
   /// Smoothed speaking speed while the speaker is making progress.
@@ -30,11 +36,17 @@ final class ScriptTracker {
   init(document: ScriptDocument = .empty) {
     self.document = document
     self.heard = Array(repeating: false, count: document.words.count)
+    self.heardAt = Array(repeating: nil, count: document.words.count)
+    self.sentenceSaidAt = Array(repeating: nil, count: document.sentences.count)
+    self.paragraphDoneAt = Array(repeating: nil, count: document.paragraphs.count)
   }
 
   func reset(document: ScriptDocument) {
     self.document = document
     heard = Array(repeating: false, count: document.words.count)
+    heardAt = Array(repeating: nil, count: document.words.count)
+    sentenceSaidAt = Array(repeating: nil, count: document.sentences.count)
+    paragraphDoneAt = Array(repeating: nil, count: document.paragraphs.count)
     cursor = -1
     wordsPerSecond = 0
     lastAdvance = nil
@@ -130,13 +142,23 @@ final class ScriptTracker {
     var changed = false
     for i in c.start...c.end where !heard[i] {
       heard[i] = true
+      heardAt[i] = now
       changed = true
+    }
+    let firstSentence = document.words[c.start].sentence
+    let lastSentence = document.words[c.end].sentence
+    for s in firstSentence...lastSentence where sentenceSaidAt[s] == nil && isSaid(sentence: s) {
+      sentenceSaidAt[s] = now
     }
     if c.end > cursor || (allowRewind && c.end != cursor) {
       cursor = c.end
       lastAdvance = now
       recordSpeed(at: now)
       changed = true
+    }
+    for (p, range) in document.paragraphs.enumerated() where paragraphDoneAt[p] == nil {
+      let lastWord = document.sentences[range.upperBound - 1].wordRange.upperBound - 1
+      if lastWord < cursor { paragraphDoneAt[p] = now }
     }
     return changed
   }

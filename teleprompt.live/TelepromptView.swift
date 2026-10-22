@@ -17,6 +17,17 @@ enum ScriptSource {
 final class ScriptLayout {
   @ObservationIgnored var sentenceFrames: [Int: CGRect] = [:]
   @ObservationIgnored var lineHeight: CGFloat = 38
+  @ObservationIgnored var flywheel = Flywheel()
+  /// Set when the offset changed outside the flywheel (user scroll, mode
+  /// switch); the next step starts from the real offset at rest.
+  @ObservationIgnored var flywheelNeedsSync = true
+
+  /// Average scroll distance per script word (content height / words),
+  /// so pace doesn't jump between short and long sentences.
+  func pointsPerWord(wordCount: Int, sentenceCount: Int) -> CGFloat? {
+    guard wordCount > 0, let first = sentenceFrames[0], let last = sentenceFrames[sentenceCount - 1] else { return nil }
+    return (last.maxY - first.minY) / CGFloat(wordCount)
+  }
 }
 
 struct TelepromptView: View {
@@ -35,12 +46,10 @@ struct TelepromptView: View {
   /// Auto-follow pauses while (and shortly after) the user drags.
   @State private var userScrolledAt: Date?
   @State private var isUserScrolling = false
-  /// Smooth mode's own notion of the offset, so per-frame motion doesn't
-  /// round-trip through scroll geometry.
-  @State private var smoothY: CGFloat?
   @State private var ticker = FrameTicker()
 
-  @AppStorage("smoothScroll") private var smoothScrollSetting = false
+  @AppStorage("smoothScroll") private var smoothScrollSetting = true
+  @AppStorage("lightFunctionWords") private var lightFunctionWords = true
   /// DEBUG demos can force smooth mode without changing the saved setting.
   @State private var forceSmooth = false
   private var smoothScroll: Bool { smoothScrollSetting || forceSmooth }
@@ -76,7 +85,8 @@ struct TelepromptView: View {
           .background(Color.red.opacity(0.85))
       }
       ScrollView {
-        ScriptTextView(tracker: tracker, layout: layout, verticalInset: viewportHeight / 2)
+        ScriptTextView(tracker: tracker, layout: layout, verticalInset: viewportHeight / 2,
+                       lightFunctionWords: lightFunctionWords)
       }
       .scrollPosition($position)
       .onScrollGeometryChange(for: ScrollMetrics.self) { geo in
@@ -89,7 +99,7 @@ struct TelepromptView: View {
         isUserScrolling = phase == .interacting || phase == .decelerating
         if phase == .interacting || phase == .decelerating {
           userScrolledAt = Date()
-          smoothY = nil
+          layout.flywheelNeedsSync = true
         }
       }
       .background(Color.black)
@@ -173,35 +183,35 @@ struct TelepromptView: View {
   }
 
   private func configureTicker() {
+    layout.flywheelNeedsSync = true
     if smoothScroll {
       ticker.start { dt in smoothStep(dt) }
     } else {
       ticker.stop()
-      smoothY = nil
       followFocus()
     }
   }
 
-  /// Smooth mode: move at the speaker's pace (words/sec × points per word
-  /// around the current line), corrected toward keeping that line
-  /// centered. Never scrolls backward; waits if it gets ahead.
+  /// Smooth mode: a flywheel with friction (see `Flywheel`). Speaking spins
+  /// it toward your average pace; pausing lets it coast to a stop, with a
+  /// weak pull toward centering the next line.
   private func smoothStep(_ dt: CFTimeInterval) {
     guard !autoFollowPaused, let word = tracker.focusWord,
           let target = centeredOffset(for: word) else { return }
-    var y = smoothY ?? contentOffset
+    if layout.flywheelNeedsSync {
+      layout.flywheel.reset(position: contentOffset)
+      layout.flywheelNeedsSync = false
+    }
     let doc = tracker.document
-    let sentence = doc.words[word].sentence
-    let wordCount = max(doc.sentences[sentence].wordRange.count, 1)
-    let pointsPerWord = (layout.sentenceFrames[sentence]?.height ?? layout.lineHeight) / CGFloat(wordCount)
-    let pace = CGFloat(tracker.currentWordsPerSecond()) * pointsPerWord
-    let error = target - y
-    var velocity = pace + 1.5 * error
-    if error < -1.5 * layout.lineHeight { velocity = 0 }
-    velocity = min(max(velocity, 0), 2000)
-    guard velocity > 0.5 else { return }
-    y += velocity * CGFloat(dt)
-    smoothY = y
-    position.scrollTo(y: y)
+    let pointsPerWord = layout.pointsPerWord(wordCount: doc.words.count, sentenceCount: doc.sentences.count) ?? layout.lineHeight / 6
+    let speaking = tracker.lastAdvance.map { Date().timeIntervalSince($0) < 1.2 } ?? false
+    let before = layout.flywheel.position
+    layout.flywheel.step(dt: dt, target: target,
+                         speakingPace: tracker.wordsPerSecond * pointsPerWord,
+                         speaking: speaking)
+    // Skip sub-pixel updates so a resting flywheel doesn't re-render.
+    guard abs(layout.flywheel.position - before) > 0.05 else { return }
+    position.scrollTo(y: layout.flywheel.position)
   }
 
   // MARK: - Loading
@@ -318,14 +328,13 @@ private struct ScriptTextView: View {
   let tracker: ScriptTracker
   let layout: ScriptLayout
   let verticalInset: CGFloat
+  /// Set function words (the, of, and, it, would…) in a lighter weight.
+  let lightFunctionWords: Bool
 
   static let fontSize: CGFloat = 32
   static let sentenceSpacing: CGFloat = 18
   static let font = Font.system(size: fontSize, weight: .medium)
-  /// Opacity of fully faded (said) text.
-  static let saidOpacity = 0.35
-  /// Words spoken after a word before it's fully faded.
-  static let fadeWords = 6.0
+  static let lightFont = Font.system(size: fontSize, weight: .light)
   static let horizontalPadding: CGFloat = 28
 
   /// Longest line, in characters. Print guidance is 45–75 (66 ideal); a
@@ -346,17 +355,22 @@ private struct ScriptTextView: View {
   var body: some View {
     let doc = tracker.document
     let fade = FadeState(tracker: tracker)
+    let now = Date()
     VStack(alignment: .leading, spacing: 0) {
       ForEach(Array(doc.paragraphs.enumerated()), id: \.offset) { p, sentences in
         VStack(alignment: .leading, spacing: Self.sentenceSpacing) {
           ForEach(Array(sentences), id: \.self) { s in
-            Text(attributed(sentence: s, fade: fade))
-              .font(Self.font)
-              .lineHeight(.tight)
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .onGeometryChange(for: CGRect.self) { $0.frame(in: .named("script")) } action: {
-                layout.sentenceFrames[s] = $0
-              }
+            // Re-render at 60 fps only while one of this sentence's fades
+            // is running, then stop.
+            TimelineView(.explicit(fade.frameDates(sentence: s, document: doc, now: now))) { context in
+              Text(attributed(sentence: s, fade: fade, at: context.date))
+            }
+            .font(Self.font)
+            .lineHeight(.tight)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .onGeometryChange(for: CGRect.self) { $0.frame(in: .named("script")) } action: {
+              layout.sentenceFrames[s] = $0
+            }
           }
         }
         // An extra line between paragraphs.
@@ -375,40 +389,68 @@ private struct ScriptTextView: View {
     .coordinateSpace(.named("script"))
   }
 
-  /// Snapshot of what the fade needs, computed once per render.
+  // MARK: - Fade
+
+  /// Said words drop to 80% at once, then ease to 40% over 333 ms.
+  static let fadeStart = 0.8
+  static let fadeEnd = 0.4
+  static let fadeDuration: TimeInterval = 0.333
+
+  /// Opacity `t` seconds after a word was said.
+  static func saidOpacity(after t: TimeInterval) -> Double {
+    let x = min(max(t / fadeDuration, 0), 1)
+    let eased = 1 - (1 - x) * (1 - x)
+    return fadeStart - (fadeStart - fadeEnd) * eased
+  }
+
+  /// Snapshot of what the fade needs, taken once per render.
   struct FadeState {
     let cursor: Int
-    let heard: [Bool]
-    let saidSentences: [Bool]
-    /// Last word index of each paragraph.
-    let paragraphEnds: [Int]
+    let heardAt: [Date?]
+    let sentenceSaidAt: [Date?]
+    let paragraphDoneAt: [Date?]
 
     init(tracker: ScriptTracker) {
-      let doc = tracker.document
       cursor = tracker.cursor
-      heard = tracker.heard
-      saidSentences = doc.sentences.indices.map { tracker.isSaid(sentence: $0) }
-      paragraphEnds = doc.paragraphs.map { doc.sentences[$0.upperBound - 1].wordRange.upperBound - 1 }
+      heardAt = tracker.heardAt
+      sentenceSaidAt = tracker.sentenceSaidAt
+      paragraphDoneAt = tracker.paragraphDoneAt
+    }
+
+    /// When a word's fade started, and whether it's a full (said) fade or a
+    /// half (missed, paragraph finished) fade. Nil: still white.
+    func fadeStart(word w: Int, sentence s: Int, paragraph p: Int) -> (Date, half: Bool)? {
+      guard w <= cursor else { return nil }
+      if let t = heardAt[w] ?? sentenceSaidAt[s] { return (t, false) }
+      if let t = paragraphDoneAt[p] { return (t, true) }
+      return nil
+    }
+
+    /// 60 fps dates from now until the sentence's newest fade finishes.
+    func frameDates(sentence s: Int, document doc: ScriptDocument, now: Date) -> [Date] {
+      let sentence = doc.sentences[s]
+      var latest: Date?
+      for w in sentence.wordRange {
+        if let (t, _) = fadeStart(word: w, sentence: s, paragraph: sentence.paragraph),
+           latest.map({ t > $0 }) ?? true {
+          latest = t
+        }
+      }
+      guard let latest else { return [] }
+      let end = latest.addingTimeInterval(ScriptTextView.fadeDuration + 0.02)
+      guard end > now else { return [] }
+      return Array(stride(from: now, through: end, by: 1.0 / 60))
     }
   }
 
-  /// Said words dim gradually over the next few spoken words. Missed words
-  /// stay white until their paragraph is finished, then dim halfway.
-  /// Anything ahead of the speaker is white.
-  static func opacity(word w: Int, sentence: Int, paragraph: Int, fade: FadeState) -> Double {
-    let c = fade.cursor
-    guard w <= c else { return 1 }
-    let range = 1 - saidOpacity
-    if fade.heard[w] || fade.saidSentences[sentence] {
-      return 1 - range * min(1, Double(c - w + 1) / fadeWords)
-    }
-    let end = fade.paragraphEnds[paragraph]
-    guard c > end else { return 1 }
-    return 1 - range * 0.5 * min(1, Double(c - end) / fadeWords)
+  static func opacity(word w: Int, sentence s: Int, paragraph p: Int, fade: FadeState, at date: Date) -> Double {
+    guard let (start, half) = fade.fadeStart(word: w, sentence: s, paragraph: p) else { return 1 }
+    let full = saidOpacity(after: date.timeIntervalSince(start))
+    return half ? 1 - (1 - full) / 2 : full
   }
 
-  private func attributed(sentence s: Int, fade: FadeState) -> AttributedString {
-    var result = colored(sentence: s, fade: fade)
+  private func attributed(sentence s: Int, fade: FadeState, at date: Date) -> AttributedString {
+    var result = styled(sentence: s, fade: fade, at: date)
     // Keep em dashes on the line with the word before them.
     for range in result.characters.ranges(of: ["—"]).reversed() {
       result.characters.insert("\u{2060}", at: range.lowerBound)
@@ -416,19 +458,14 @@ private struct ScriptTextView: View {
     return result
   }
 
-  /// Each word is colored along with the punctuation/space after it; any
-  /// text before the first word takes the first word's color.
-  private func colored(sentence s: Int, fade: FadeState) -> AttributedString {
+  /// Each word is styled along with the punctuation/space after it; any
+  /// text before the first word takes the first word's style.
+  private func styled(sentence s: Int, fade: FadeState, at date: Date) -> AttributedString {
     let doc = tracker.document
     let sentence = doc.sentences[s]
     let text = sentence.text
     let wordIndices = Array(sentence.wordRange)
-    func color(_ w: Int) -> Color {
-      let o = Self.opacity(word: w, sentence: s, paragraph: sentence.paragraph, fade: fade)
-      return o >= 1 ? .white : Color.white.opacity((o * 50).rounded() / 50)
-    }
-    // Fast path: entirely ahead of the speaker.
-    guard let first = wordIndices.first, first <= fade.cursor else {
+    guard !wordIndices.isEmpty else {
       var plain = AttributedString(text)
       plain.foregroundColor = .white
       return plain
@@ -438,7 +475,11 @@ private struct ScriptTextView: View {
     for (k, w) in wordIndices.enumerated() {
       let end = k + 1 < wordIndices.count ? doc.words[wordIndices[k + 1]].range.lowerBound : text.endIndex
       var piece = AttributedString(text[index..<end])
-      piece.foregroundColor = color(w)
+      let o = Self.opacity(word: w, sentence: s, paragraph: sentence.paragraph, fade: fade, at: date)
+      piece.foregroundColor = o >= 1 ? .white : Color.white.opacity(o)
+      if lightFunctionWords && doc.words[w].isFunctionWord {
+        piece.font = Self.lightFont
+      }
       result += piece
       index = end
     }

@@ -2,7 +2,8 @@ import SwiftUI
 
 struct SettingsView: View {
   @EnvironmentObject private var appDelegate: TelepromptAppDelegate
-  @AppStorage("smoothScroll") private var smoothScroll = false
+  @AppStorage("smoothScroll") private var smoothScroll = true
+  @AppStorage("lightFunctionWords") private var lightFunctionWords = true
   @Environment(\.dismiss) private var dismiss
 
   var body: some View {
@@ -21,7 +22,13 @@ struct SettingsView: View {
         Section {
           Toggle("Smooth Scroll", isOn: $smoothScroll)
         } footer: {
-          Text("Keeps the script moving at your speaking pace, so upcoming lines are on screen as you reach them. When off, the current line jumps to the middle as you finish each one.")
+          Text("Scrolls steadily at your average speaking pace and coasts to a stop when you pause. When off, the current line jumps to the middle as you finish each one.")
+        }
+
+        Section {
+          Toggle("Lighter Small Words", isOn: $lightFunctionWords)
+        } footer: {
+          Text("Sets words you don't stress when speaking (the, of, and, it, would) in a lighter weight, so the important words stand out.")
         }
       }
       .navigationTitle("Settings")

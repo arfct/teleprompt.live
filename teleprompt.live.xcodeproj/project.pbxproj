@@ -11,6 +11,7 @@
 		AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SD02D000000A00000SD /* ScriptDocument.swift */; };
 		AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00ST02D000000A00000ST /* ScriptTracker.swift */; };
 		AA00SV12D000000A00001SV /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SV02D000000A00000SV /* SettingsView.swift */; };
+		AA00FW12D000000A00001FW /* Flywheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00FW02D000000A00000FW /* Flywheel.swift */; };
 		AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */; };
 		AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */; };
 		AA4A8BA72C37513200E3DFE0 /* ScriptScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */; };
@@ -50,6 +51,7 @@
 		AA00SD02D000000A00000SD /* ScriptDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptDocument.swift; sourceTree = "<group>"; };
 		AA00ST02D000000A00000ST /* ScriptTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptTracker.swift; sourceTree = "<group>"; };
 		AA00SV02D000000A00000SV /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA00FW02D000000A00000FW /* Flywheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flywheel.swift; sourceTree = "<group>"; };
 		AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPickerView.swift; sourceTree = "<group>"; };
 		AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptScrollView.swift; sourceTree = "<group>"; };
 		AAB3C5552C3362D800D47368 /* teleprompt.live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teleprompt.live.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				AA00SD02D000000A00000SD /* ScriptDocument.swift */,
 				AA00ST02D000000A00000ST /* ScriptTracker.swift */,
 				AA00SV02D000000A00000SV /* SettingsView.swift */,
+				AA00FW02D000000A00000FW /* Flywheel.swift */,
 				AAB3C55C2C3362D800D47368 /* CachedDocument.swift */,
 				AAB3C55E2C3362D900D47368 /* Assets.xcassets */,
 				AAB3C5602C3362D900D47368 /* Preview Content */,
@@ -268,6 +271,7 @@
 				AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */,
 				AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */,
 				AA00SV12D000000A00001SV /* SettingsView.swift in Sources */,
+				AA00FW12D000000A00001FW /* Flywheel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
