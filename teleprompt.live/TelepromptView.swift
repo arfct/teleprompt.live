@@ -322,17 +322,19 @@ private struct ScriptTextView: View {
   static let fontSize: CGFloat = 32
   static let sentenceSpacing: CGFloat = 18
   static let font = Font.system(size: fontSize, weight: .medium)
-  static let said = Color.white.opacity(0.35)
-  static let highlight = Color(red: 1.0, green: 0.82, blue: 0.3)
+  /// Opacity of fully faded (said) text.
+  static let saidOpacity = 0.35
+  /// Words spoken after a word before it's fully faded.
+  static let fadeWords = 6.0
 
   var body: some View {
     let doc = tracker.document
-    let current = tracker.currentSentence
+    let fade = FadeState(tracker: tracker)
     VStack(alignment: .leading, spacing: 0) {
       ForEach(Array(doc.paragraphs.enumerated()), id: \.offset) { p, sentences in
         VStack(alignment: .leading, spacing: Self.sentenceSpacing) {
           ForEach(Array(sentences), id: \.self) { s in
-            Text(attributed(sentence: s, current: current))
+            Text(attributed(sentence: s, fade: fade))
               .font(Self.font)
               .lineHeight(.tight)
               .frame(maxWidth: .infinity, alignment: .leading)
@@ -357,11 +359,40 @@ private struct ScriptTextView: View {
     .coordinateSpace(.named("script"))
   }
 
-  /// Said sentences are gray. In the current sentence, heard words are
-  /// highlighted (with the punctuation that follows them). Everything else,
-  /// including skipped sentences, is plain white.
-  private func attributed(sentence s: Int, current: Int?) -> AttributedString {
-    var result = colored(sentence: s, current: current)
+  /// Snapshot of what the fade needs, computed once per render.
+  struct FadeState {
+    let cursor: Int
+    let heard: [Bool]
+    let saidSentences: [Bool]
+    /// Last word index of each paragraph.
+    let paragraphEnds: [Int]
+
+    init(tracker: ScriptTracker) {
+      let doc = tracker.document
+      cursor = tracker.cursor
+      heard = tracker.heard
+      saidSentences = doc.sentences.indices.map { tracker.isSaid(sentence: $0) }
+      paragraphEnds = doc.paragraphs.map { doc.sentences[$0.upperBound - 1].wordRange.upperBound - 1 }
+    }
+  }
+
+  /// Said words dim gradually over the next few spoken words. Missed words
+  /// stay white until their paragraph is finished, then dim halfway.
+  /// Anything ahead of the speaker is white.
+  static func opacity(word w: Int, sentence: Int, paragraph: Int, fade: FadeState) -> Double {
+    let c = fade.cursor
+    guard w <= c else { return 1 }
+    let range = 1 - saidOpacity
+    if fade.heard[w] || fade.saidSentences[sentence] {
+      return 1 - range * min(1, Double(c - w + 1) / fadeWords)
+    }
+    let end = fade.paragraphEnds[paragraph]
+    guard c > end else { return 1 }
+    return 1 - range * 0.5 * min(1, Double(c - end) / fadeWords)
+  }
+
+  private func attributed(sentence s: Int, fade: FadeState) -> AttributedString {
+    var result = colored(sentence: s, fade: fade)
     // Keep em dashes on the line with the word before them.
     for range in result.characters.ranges(of: ["—"]).reversed() {
       result.characters.insert("\u{2060}", at: range.lowerBound)
@@ -369,36 +400,31 @@ private struct ScriptTextView: View {
     return result
   }
 
-  private func colored(sentence s: Int, current: Int?) -> AttributedString {
+  /// Each word is colored along with the punctuation/space after it; any
+  /// text before the first word takes the first word's color.
+  private func colored(sentence s: Int, fade: FadeState) -> AttributedString {
     let doc = tracker.document
     let sentence = doc.sentences[s]
-    let isCurrent = s == current
-    if !isCurrent {
-      var text = AttributedString(sentence.text)
-      text.foregroundColor = tracker.isSaid(sentence: s) ? Self.said : .white
-      return text
+    let text = sentence.text
+    let wordIndices = Array(sentence.wordRange)
+    func color(_ w: Int) -> Color {
+      let o = Self.opacity(word: w, sentence: s, paragraph: sentence.paragraph, fade: fade)
+      return o >= 1 ? .white : Color.white.opacity((o * 50).rounded() / 50)
+    }
+    // Fast path: entirely ahead of the speaker.
+    guard let first = wordIndices.first, first <= fade.cursor else {
+      var plain = AttributedString(text)
+      plain.foregroundColor = .white
+      return plain
     }
     var result = AttributedString()
-    let text = sentence.text
     var index = text.startIndex
-    let wordIndices = Array(sentence.wordRange)
-    if let first = wordIndices.first {
-      var lead = AttributedString(text[index..<doc.words[first].range.lowerBound])
-      lead.foregroundColor = .white
-      result += lead
-      index = doc.words[first].range.lowerBound
-    }
     for (k, w) in wordIndices.enumerated() {
       let end = k + 1 < wordIndices.count ? doc.words[wordIndices[k + 1]].range.lowerBound : text.endIndex
       var piece = AttributedString(text[index..<end])
-      piece.foregroundColor = tracker.heard[w] ? Self.highlight : .white
+      piece.foregroundColor = color(w)
       result += piece
       index = end
-    }
-    if index < text.endIndex {
-      var tail = AttributedString(text[index...])
-      tail.foregroundColor = .white
-      result += tail
     }
     return result
   }
