@@ -326,6 +326,22 @@ private struct ScriptTextView: View {
   static let saidOpacity = 0.35
   /// Words spoken after a word before it's fully faded.
   static let fadeWords = 6.0
+  static let horizontalPadding: CGFloat = 28
+
+  /// Longest line, in characters. Print guidance is 45–75 (66 ideal); a
+  /// prompter is read aloud at a glance, often near a camera, so use the
+  /// short end: less eye travel on camera and easier returns to the next
+  /// line. Narrow screens (phones in portrait) are already well under it.
+  static let maxCharactersPerLine = 45
+
+  /// `maxCharactersPerLine` in points, from the average character width
+  /// of English prose at the script font.
+  static let maxLineWidth: CGFloat = {
+    let sample = "Being told I would be expected to talk here, I inquired what sort of talk I ought to make. They said it should be something suitable to youth."
+    let uiFont = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+    let width = (sample as NSString).size(withAttributes: [.font: uiFont]).width
+    return ceil(width / CGFloat(sample.count) * CGFloat(maxCharactersPerLine))
+  }()
 
   var body: some View {
     let doc = tracker.document
@@ -347,8 +363,8 @@ private struct ScriptTextView: View {
         .padding(.bottom, p == doc.paragraphs.count - 1 ? 0 : layout.lineHeight + Self.sentenceSpacing)
       }
     }
-    .padding(.horizontal, 28)
-    .frame(maxWidth: 820, alignment: .leading)
+    .padding(.horizontal, Self.horizontalPadding)
+    .frame(maxWidth: Self.maxLineWidth + 2 * Self.horizontalPadding, alignment: .leading)
     .frame(maxWidth: .infinity)
     .padding(.vertical, verticalInset)
     .background(alignment: .topLeading) {

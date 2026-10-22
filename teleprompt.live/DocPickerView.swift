@@ -52,6 +52,10 @@ struct DocPickerView: View {
         // the zoom transition in the simulator.
         guard !demoDidRun, let first = scripts.first else { return }
         let args = ProcessInfo.processInfo.arguments
+        if args.contains("-UIDemoLandscape"),
+           let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+          scene.requestGeometryUpdate(.iOS(interfaceOrientations: .landscapeRight))
+        }
         // `-UIDemoOpen`: open the first card and stay (teleprompter demos).
         if args.contains("-UIDemoOpen") {
           demoDidRun = true
