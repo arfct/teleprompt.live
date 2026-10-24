@@ -69,3 +69,6 @@ fastlane/test_output
 
 python/
 .DS_Store
+
+# Secrets (copy Config/Secrets.xcconfig.example -> Config/Secrets.xcconfig)
+Config/Secrets.xcconfig

@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		AA4A8B502C349E6000E3DFE0 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8B4F2C349E6000E3DFE0 /* Starscream */; };
-		AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */; };
-		AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */; };
+		AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SD02D000000A00000SD /* ScriptDocument.swift */; };
+		AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00ST02D000000A00000ST /* ScriptTracker.swift */; };
+		AA00SV12D000000A00001SV /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SV02D000000A00000SV /* SettingsView.swift */; };
+		AA00FW12D000000A00001FW /* Flywheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00FW02D000000A00000FW /* Flywheel.swift */; };
 		AA4A8B692C34F61800E3DFE0 /* DocPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */; };
 		AA4A8BA52C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A8BA42C35FBE300E3DFE0 /* GoogleAPIClientForREST_PeopleService */; };
 		AA4A8BA72C37513200E3DFE0 /* ScriptScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */; };
@@ -34,11 +36,22 @@
 		AAB3C5872C33658800D47368 /* GoogleAPIClientForREST_APIManagement in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5862C33658800D47368 /* GoogleAPIClientForREST_APIManagement */; };
 		AAB3C5892C3366AC00D47368 /* GoogleAPIClientForREST_Docs in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C5882C3366AC00D47368 /* GoogleAPIClientForREST_Docs */; };
 		AAB3C58B2C33670C00D47368 /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = AAB3C58A2C33670C00D47368 /* GoogleAPIClientForREST_Drive */; };
+		AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00TE02D000000A00000TE /* TranscriptionEngine.swift */; };
+		AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */; };
+		AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */; };
+		AA00IC12D000000A00001IC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AA00IC02D000000A00000IC /* AppIcon.icon */; };
+		AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SE02D000000A00000SE /* ScriptEditorView.swift */; };
+		AA00GA12D000000A00001GA /* GoogleAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00GA02D000000A00000GA /* GoogleAccount.swift */; };
+		AA00AG12D000000A00001AG /* AddGoogleDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00AG02D000000A00000AG /* AddGoogleDocView.swift */; };
+		AA00SS12D000000A00001SS /* StarterScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SS02D000000A00000SS /* StarterScripts.swift */; };
+		AA00SA12D000000A00001SA /* SpeechAnalyzerTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SA02D000000A00000SA /* SpeechAnalyzerTranscriptionEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMatcher.swift; sourceTree = "<group>"; };
-		AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceMatcher.swift; sourceTree = "<group>"; };
+		AA00SD02D000000A00000SD /* ScriptDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptDocument.swift; sourceTree = "<group>"; };
+		AA00ST02D000000A00000ST /* ScriptTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptTracker.swift; sourceTree = "<group>"; };
+		AA00SV02D000000A00000SV /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA00FW02D000000A00000FW /* Flywheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flywheel.swift; sourceTree = "<group>"; };
 		AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPickerView.swift; sourceTree = "<group>"; };
 		AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptScrollView.swift; sourceTree = "<group>"; };
 		AAB3C5552C3362D800D47368 /* teleprompt.live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teleprompt.live.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,7 +60,19 @@
 		AAB3C55C2C3362D800D47368 /* CachedDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedDocument.swift; sourceTree = "<group>"; };
 		AAB3C55E2C3362D900D47368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Secrets.xcconfig"; sourceTree = "<group>"; };
+		AA00INFO2D000000A00000PL /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA00TE02D000000A00000TE /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceTranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramTranscriptionEngine.swift; sourceTree = "<group>"; };
+		AA00IC02D000000A00000IC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		AA00EN02D000000A00000EN /* teleprompt.live-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "teleprompt.live-macOS.entitlements"; sourceTree = "<group>"; };
+		AA00SE02D000000A00000SE /* ScriptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEditorView.swift; sourceTree = "<group>"; };
+		AA00GA02D000000A00000GA /* GoogleAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAccount.swift; sourceTree = "<group>"; };
+		AA00AG02D000000A00000AG /* AddGoogleDocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoogleDocView.swift; sourceTree = "<group>"; };
+		AA00SS02D000000A00000SS /* StarterScripts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterScripts.swift; sourceTree = "<group>"; };
+		AA00SA02D000000A00000SA /* SpeechAnalyzerTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAnalyzerTranscriptionEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +126,25 @@
 				AAB3C55A2C3362D800D47368 /* TelepromptView.swift */,
 				AA4A8BA62C37511800E3DFE0 /* ScriptScrollView.swift */,
 				AA4A8B682C34F60F00E3DFE0 /* DocPickerView.swift */,
-				AA4A8B662C34D45500E3DFE0 /* SequenceMatcher.swift */,
-				AA4A8B512C34C57D00E3DFE0 /* StringMatcher.swift */,
+				AA00SD02D000000A00000SD /* ScriptDocument.swift */,
+				AA00ST02D000000A00000ST /* ScriptTracker.swift */,
+				AA00SV02D000000A00000SV /* SettingsView.swift */,
+				AA00FW02D000000A00000FW /* Flywheel.swift */,
 				AAB3C55C2C3362D800D47368 /* CachedDocument.swift */,
 				AAB3C55E2C3362D900D47368 /* Assets.xcassets */,
 				AAB3C5602C3362D900D47368 /* Preview Content */,
 				AAB3C57E2C33651000D47368 /* AppDelegate.swift */,
+				AA00INFO2D000000A00000PL /* Info.plist */,
+				AA00TE02D000000A00000TE /* TranscriptionEngine.swift */,
+				AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */,
+				AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */,
+				AA00IC02D000000A00000IC /* AppIcon.icon */,
+				AA00EN02D000000A00000EN /* teleprompt.live-macOS.entitlements */,
+				AA00SE02D000000A00000SE /* ScriptEditorView.swift */,
+				AA00GA02D000000A00000GA /* GoogleAccount.swift */,
+				AA00AG02D000000A00000AG /* AddGoogleDocView.swift */,
+				AA00SS02D000000A00000SS /* StarterScripts.swift */,
+				AA00SA02D000000A00000SA /* SpeechAnalyzerTranscriptionEngine.swift */,
 			);
 			path = teleprompt.live;
 			sourceTree = "<group>";
@@ -205,6 +243,7 @@
 			files = (
 				AAB3C5622C3362D900D47368 /* Preview Assets.xcassets in Resources */,
 				AAB3C55F2C3362D900D47368 /* Assets.xcassets in Resources */,
+				AA00IC12D000000A00001IC /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,9 +259,19 @@
 				AAB3C57F2C33651000D47368 /* AppDelegate.swift in Sources */,
 				AAB3C55B2C3362D800D47368 /* TelepromptView.swift in Sources */,
 				AAB3C55D2C3362D800D47368 /* CachedDocument.swift in Sources */,
+				AA00TE12D000000A00001TE /* TranscriptionEngine.swift in Sources */,
+				AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */,
+				AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */,
+				AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */,
+				AA00GA12D000000A00001GA /* GoogleAccount.swift in Sources */,
+				AA00AG12D000000A00001AG /* AddGoogleDocView.swift in Sources */,
+				AA00SS12D000000A00001SS /* StarterScripts.swift in Sources */,
+				AA00SA12D000000A00001SA /* SpeechAnalyzerTranscriptionEngine.swift in Sources */,
 				AAB3C5592C3362D800D47368 /* teleprompt_liveApp.swift in Sources */,
-				AA4A8B522C34C58200E3DFE0 /* StringMatcher.swift in Sources */,
-				AA4A8B672C34D45900E3DFE0 /* SequenceMatcher.swift in Sources */,
+				AA00SD12D000000A00001SD /* ScriptDocument.swift in Sources */,
+				AA00ST12D000000A00001ST /* ScriptTracker.swift in Sources */,
+				AA00SV12D000000A00001SV /* SettingsView.swift in Sources */,
+				AA00FW12D000000A00001FW /* Flywheel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -338,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -350,16 +399,17 @@
 		};
 		AAB3C5662C3362D900D47368 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA00SEC12D000000A00000SE /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
-				DEVELOPMENT_TEAM = A7X888RRVJ;
+				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = teleprompt.live/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -370,26 +420,31 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "live.teleprompt.teleprompt-live";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.artifact.teleprompt-live";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "teleprompt.live/teleprompt.live-macOS.entitlements";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
 		AAB3C5672C3362D900D47368 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA00SEC12D000000A00000SE /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"teleprompt.live/Preview Content\"";
-				DEVELOPMENT_TEAM = A7X888RRVJ;
+				DEVELOPMENT_TEAM = TVA9Z8LD95;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone for speech recognition to scroll the transcript as you speak";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = teleprompt.live/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -400,11 +455,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "live.teleprompt.teleprompt-live";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.artifact.teleprompt-live";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "teleprompt.live/teleprompt.live-macOS.entitlements";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
