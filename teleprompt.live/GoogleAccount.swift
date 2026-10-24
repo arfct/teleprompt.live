@@ -15,8 +15,8 @@ final class GoogleAccount: ObservableObject {
   private let peopleService = GTLRPeopleServiceService()
 
   private static let issuer = URL(string: "https://accounts.google.com")!
-  private static let clientID = "77437963566-sa51d7s3qqbpo3fgbedtietik1sp7etl.apps.googleusercontent.com"
-  private static let redirectURI = URL(string: "com.googleusercontent.apps.77437963566-sa51d7s3qqbpo3fgbedtietik1sp7etl:/oauthredirect")!
+  private static let clientID = "656329432531-cbsq9f1pbnba3m6h13ghffhe48qr92h4.apps.googleusercontent.com"
+  private static let redirectURI = URL(string: "com.googleusercontent.apps.656329432531-cbsq9f1pbnba3m6h13ghffhe48qr92h4:/oauthredirect")!
   private static let scopes = [OIDScopeOpenID, OIDScopeProfile,
                                "https://www.googleapis.com/auth/userinfo.email",
                                "https://www.googleapis.com/auth/documents.readonly",

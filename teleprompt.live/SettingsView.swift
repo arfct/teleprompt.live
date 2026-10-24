@@ -34,8 +34,8 @@ struct SettingsView: View {
         }
 
         Section {
-          Link("Support", destination: URL(string: "https://arfct.github.io/teleprompt.live/support/")!)
-          Link("Privacy Policy", destination: URL(string: "https://arfct.github.io/teleprompt.live/privacy/")!)
+          Link("Support", destination: URL(string: "https://teleprompt.fyi/support/")!)
+          Link("Privacy Policy", destination: URL(string: "https://teleprompt.fyi/privacy/")!)
         }
       }
       .navigationTitle("Settings")
