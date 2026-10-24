@@ -19,6 +19,10 @@ enum TranscriptionEngineKind: String, CaseIterable, Identifiable {
   case onDevice
   case deepgram
 
+  // Deepgram is hidden until it has a key-management story; its audio would
+  // also leave the device, which the privacy policy doesn't cover yet.
+  static let available: [TranscriptionEngineKind] = [.onDevice]
+
   var id: String { rawValue }
 
   var displayName: String {

@@ -9,14 +9,16 @@ struct SettingsView: View {
   var body: some View {
     NavigationStack {
       Form {
-        Section {
-          Picker("Voice Recognition", selection: engineBinding) {
-            ForEach(TranscriptionEngineKind.allCases) { kind in
-              Text(kind.displayName).tag(kind)
+        if TranscriptionEngineKind.available.count > 1 {
+          Section {
+            Picker("Voice Recognition", selection: engineBinding) {
+              ForEach(TranscriptionEngineKind.available) { kind in
+                Text(kind.displayName).tag(kind)
+              }
             }
+          } footer: {
+            Text("On-device recognition is private and works offline. Deepgram sends audio to the cloud and needs an API key.")
           }
-        } footer: {
-          Text("On-device recognition is private and works offline. Deepgram sends audio to the cloud and needs an API key.")
         }
 
         Section {
@@ -29,6 +31,11 @@ struct SettingsView: View {
           Toggle("Lighter Small Words", isOn: $lightFunctionWords)
         } footer: {
           Text("Sets words you don't stress when speaking (the, of, and, it, would) in a lighter weight, so the important words stand out.")
+        }
+
+        Section {
+          Link("Support", destination: URL(string: "https://arfct.github.io/teleprompt.live/support/")!)
+          Link("Privacy Policy", destination: URL(string: "https://arfct.github.io/teleprompt.live/privacy/")!)
         }
       }
       .navigationTitle("Settings")

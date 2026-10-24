@@ -40,6 +40,7 @@
 		AA00OD12D000000A00001OD /* OnDeviceTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */; };
 		AA00DG12D000000A00001DG /* DeepgramTranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */; };
 		AA00IC12D000000A00001IC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AA00IC02D000000A00000IC /* AppIcon.icon */; };
+		AA00PRIV12D00000A00001XP /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA00PRIV2D000000A00000XP /* PrivacyInfo.xcprivacy */; };
 		AA00SE12D000000A00001SE /* ScriptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00SE02D000000A00000SE /* ScriptEditorView.swift */; };
 		AA00GA12D000000A00001GA /* GoogleAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00GA02D000000A00000GA /* GoogleAccount.swift */; };
 		AA00AG12D000000A00001AG /* AddGoogleDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00AG02D000000A00000AG /* AddGoogleDocView.swift */; };
@@ -62,6 +63,7 @@
 		AAB3C5612C3362D900D47368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 						AAB3C57E2C33651000D47368 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 						AA00SEC12D000000A00000SE /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Secrets.xcconfig"; sourceTree = "<group>"; };
+		AA00PRIV2D000000A00000XP /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA00INFO2D000000A00000PL /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA00TE02D000000A00000TE /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
 		AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceTranscriptionEngine.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				AAB3C5602C3362D900D47368 /* Preview Content */,
 				AAB3C57E2C33651000D47368 /* AppDelegate.swift */,
 				AA00INFO2D000000A00000PL /* Info.plist */,
+				AA00PRIV2D000000A00000XP /* PrivacyInfo.xcprivacy */,
 				AA00TE02D000000A00000TE /* TranscriptionEngine.swift */,
 				AA00OD02D000000A00000OD /* OnDeviceTranscriptionEngine.swift */,
 				AA00DG02D000000A00000DG /* DeepgramTranscriptionEngine.swift */,
@@ -244,6 +247,7 @@
 				AAB3C5622C3362D900D47368 /* Preview Assets.xcassets in Resources */,
 				AAB3C55F2C3362D900D47368 /* Assets.xcassets in Resources */,
 				AA00IC12D000000A00001IC /* AppIcon.icon in Resources */,
+				AA00PRIV12D00000A00001XP /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
