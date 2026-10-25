@@ -20,7 +20,7 @@ final class GoogleAccount: ObservableObject {
   private static let scopes = [OIDScopeOpenID, OIDScopeProfile,
                                "https://www.googleapis.com/auth/userinfo.email",
                                "https://www.googleapis.com/auth/documents.readonly",
-                               "https://www.googleapis.com/auth/drive.readonly"]
+                               "https://www.googleapis.com/auth/drive.metadata.readonly"]
 
   var isSignedIn: Bool { authState != nil }
 
