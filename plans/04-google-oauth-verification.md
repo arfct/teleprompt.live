@@ -36,6 +36,10 @@ Unlisted YouTube video, about 2 minutes, recorded on an iPhone or the simulator 
 7. Pick "Teleprompt sample script": it opens as a script (documents.readonly). Read a line aloud so it scrolls.
 8. ⋯ → **Sign Out of Google**.
 
+## Status
+
+- 2026-10-25: published to production; branding verified; verification form submitted (Trust and Safety review, 4–6 weeks, first email in 3–5 days to support@artifact.com). Consent-screen logo replaced with the flat mic icon the same day, which reopened branding for review. The "Additional info" text was typed but probably not included, because the form went in from the Data Access save rather than the Confirm button.
+
 ## Steps
 
 1. **Publish the app** (Audience → Publish app). Lifts the test-user list and the 7-day token expiry. Users see "unverified app" and the 100-user lifetime cap applies until verification finishes.
