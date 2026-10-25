@@ -1,5 +1,7 @@
 # App Store listing — Teleprompt 1.0 (iOS)
 
+Status (2026-10-25): everything below is entered in App Store Connect with build 6 attached. **Not submitted** — held until Google sign-in is published and working (issue #2).
+
 The record of what was entered in App Store Connect. Update it in the same PR as any listing change.
 
 ## Product page
@@ -16,7 +18,9 @@ The record of what was entered in App Store Connect. Update it in the same PR as
 | Copyright | 2026 Artifact Creative Foundation |
 | Primary category | Productivity |
 | Secondary category | Photo & Video |
-| Price | Free |
+| Price | Free (base country United States) |
+| Availability | All 175 countries or regions; iPhone/iPad app on Apple silicon Macs left at default |
+| Content rights | Uses third-party content with the necessary rights (Mark Twain, "Advice to Youth", public domain) |
 
 ### Description
 
@@ -50,7 +54,7 @@ No iPhone Duo set, header or search results image yet (all optional).
 
 ## App Privacy
 
-**Data Not Collected.** Speech recognition runs on the device; scripts stay on the device; Google requests go straight from the device to Google, and nothing reaches Artifact. Matches `PrivacyInfo.xcprivacy` (no collected data, no tracking) and the privacy policy.
+**Data Not Collected** (published). Speech recognition runs on the device; scripts stay on the device; Google requests go straight from the device to Google, and nothing reaches Artifact. Matches `PrivacyInfo.xcprivacy` (no collected data, no tracking) and the privacy policy.
 
 ## Age rating
 
