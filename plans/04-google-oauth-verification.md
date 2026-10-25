@@ -38,7 +38,7 @@ Unlisted YouTube video, about 2 minutes, recorded on an iPhone or the simulator 
 
 ## Status
 
-- 2026-10-25: published to production; branding verified; verification form submitted (Trust and Safety review, 4–6 weeks, first email in 3–5 days to support@artifact.com). Consent-screen logo replaced with the flat mic icon the same day, which reopened branding for review. The "Additional info" text was typed but probably not included, because the form went in from the Data Access save rather than the Confirm button.
+- 2026-10-25: published to production; branding verified; verification form submitted (Trust and Safety review, 4–6 weeks, first email in 3–5 days; developer contact changed to nicholas@artifact.com the same day). Consent-screen logo replaced with the flat mic icon the same day, which reopened branding for review. The "Additional info" text was typed but probably not included, because the form went in from the Data Access save rather than the Confirm button.
 
 ## Steps
 
