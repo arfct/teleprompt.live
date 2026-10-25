@@ -23,6 +23,8 @@ What Teleprompt asks Google for, why, and how to get it verified. Status lives i
 
 ## Demo video
 
+**Uploaded:** https://www.youtube.com/watch?v=aSu4vZJ1lug (unlisted, 1:13, recorded in the iPhone 17 simulator with the test account).
+
 Unlisted YouTube video, about 2 minutes, recorded on an iPhone or the simulator with the test Google account. Google wants to see the consent screen with the app's name and the OAuth client ID, and each scope being used.
 
 1. Show the app's name and version (App Store/TestFlight page or Settings → Teleprompt).
