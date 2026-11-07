@@ -15,7 +15,10 @@ class TelepromptAppDelegate: UIResponder, UIApplicationDelegate, ObservableObjec
   private var engine: TranscriptionEngine?
 
   var selectedEngineKind: TranscriptionEngineKind {
-    get { TranscriptionEngineKind(rawValue: engineKindRaw) ?? .onDevice }
+    get {
+      let stored = TranscriptionEngineKind(rawValue: engineKindRaw) ?? .onDevice
+      return TranscriptionEngineKind.available.contains(stored) ? stored : .onDevice
+    }
     set { engineKindRaw = newValue.rawValue }
   }
 

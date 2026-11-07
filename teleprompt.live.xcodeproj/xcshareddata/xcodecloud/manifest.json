@@ -1,0 +1,9 @@
+{
+  "id" : "bfa180fd-853f-4f1a-8a58-a346cb316b82",
+  "targets" : [
+    {
+      "id" : "176ba81f-fafa-4811-a432-e3e8893eda97",
+      "name" : "teleprompt.live"
+    }
+  ]
+}
