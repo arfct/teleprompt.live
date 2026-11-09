@@ -4,7 +4,6 @@ date: 2024-07
 category: product
 tags:
   - ios
-  - speech
 url: https://teleprompt.fyi
 links:
   source: https://github.com/arfct/teleprompt.live
