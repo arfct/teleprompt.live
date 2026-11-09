@@ -20,10 +20,10 @@ media:
 credits: [dps]
 ---
 
-A teleprompter should follow the speaker, not the other way around. Teleprompt listens while you talk: on-device speech recognition tracks your position in the script in real time, and the text scrolls itself, keeping the current line centered on screen. No foot pedal, no tapping to advance, no drifting ahead of a fixed scroll rate.
+Teleprompt is a teleprompter for iPhone and iPad that follows the speaker. On-device speech recognition tracks the speaker's position in the script, and the text scrolls to keep the current line centered on screen. There is no foot pedal, no tap to advance and no fixed scroll rate.
 
-Pause, and the script waits with you. Speed up, and it keeps pace. Words already said fade; small words are set lighter, so the ones you stress stand out. Scripts are typed, pasted or opened from Google Docs, and kept on the device. Recognition never leaves it.
+When the speaker pauses, the script stops; when they speed up, it keeps pace. Words already spoken fade, and small words are set lighter so the stressed words stand out. Scripts are typed, pasted or opened from Google Docs, and kept on the device. Recognition runs on the device as well.
 
-For iPhone and iPad, at teleprompt.fyi. The App Store listing is entered but held back until Google sign-in is published.
+The App Store listing is entered but held back until Google sign-in is published. The site is teleprompt.fyi.
 
 Swift, SwiftUI, Speech framework. 2024.
