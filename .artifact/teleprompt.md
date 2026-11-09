@@ -18,9 +18,9 @@ media:
   - src: landscape.png
     caption: Landscape on iPhone, the same script set wide
     alt: A wide iPhone screen of large white text on black, the top lines dimmed
-role: Design, Engineering
-unconfirmed:
-  - role
+credits:
+  - name: David Singleton
+    url: https://github.com/dps
 ---
 
 A teleprompter should follow the speaker, not the other way around. Teleprompt listens while you talk: on-device speech recognition tracks your position in the script in real time, and the text scrolls itself, keeping the current line centered on screen. No foot pedal, no tapping to advance, no drifting ahead of a fixed scroll rate.
