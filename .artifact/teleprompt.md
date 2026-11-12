@@ -1,9 +1,11 @@
 ---
-title: Teleprompt Live
+title: Teleprompt
 date: 2024-07
 category: product
 tags:
   - ios
+  - ipados
+  - macos
 url: https://teleprompt.fyi
 links:
   source: https://github.com/arfct/teleprompt.live
@@ -20,10 +22,10 @@ media:
 credits: [dps]
 ---
 
-A script in Teleprompt Live scrolls as it is read aloud, at the pace of the person reading it. Speech recognition on the iPhone or iPad matches the spoken words against the text, and the scroll is modelled on a flywheel. Speaking spins it up toward the speaker's average pace, a pause lets it coast to a stop under friction, and a weak spring draws the current line toward the middle of the screen. Only the acceleration is ever adjusted, so a change of pace or of line does not show as a jolt, and the text never runs backward.
+A script in Teleprompt scrolls as it is read aloud, at the pace of the person reading it. Speech recognition on the iPhone or iPad matches the spoken words against the text, and the scroll is modelled on a flywheel. Speaking spins it up toward the speaker's average pace, a pause lets it coast to a stop under friction, and a weak spring draws the current line toward the middle of the screen. Only the acceleration is ever adjusted, so a change of pace or of line does not show as a jolt, and the text never runs backward.
 
 When a speaker skips a sentence, the tracker moves ahead once enough of the later words match. Words already spoken fade. Those that go unstressed in speech, such as "the", "of" and "would", are set in a lighter weight so that the others stand out, while "not" and "never" keep their full weight.
 
-Scripts are typed, pasted or opened from Google Docs, and they stay on the device. The same code builds for the Mac with Mac Catalyst. Version 1.0 has not been released on the App Store.
+Scripts are typed, pasted or opened from Google Docs, and they stay on the device. The same code builds for the Mac with Mac Catalyst. The app is built from the repository and is not on the App Store.
 
 Swift, SwiftUI, Speech framework. 2024.
