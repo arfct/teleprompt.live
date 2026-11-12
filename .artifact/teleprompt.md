@@ -1,6 +1,7 @@
 ---
 title: Teleprompt
 date: 2024-07
+status: wip
 category: product
 tags:
   - ios
@@ -20,6 +21,7 @@ media:
     caption: The same script on an iPhone turned to landscape
     alt: A wide iPhone screen of large white text on black, the top lines dimmed
 credits: [dps]
+unconfirmed: [status]
 ---
 
 A script in Teleprompt scrolls as it is read aloud, at the pace of the person reading it. Speech recognition on the iPhone or iPad matches the spoken words against the text, and the scroll is modelled on a flywheel. Speaking spins it up toward the speaker's average pace, a pause lets it coast to a stop under friction, and a weak spring draws the current line toward the middle of the screen. Only the acceleration is ever adjusted, so a change of pace or of line does not show as a jolt, and the text never runs backward.
